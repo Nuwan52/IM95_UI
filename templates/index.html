@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Machine Control System</title>
+    <link rel="stylesheet" href="static/styles.css">
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+
+<body class="dark-theme">
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-left">
+                <div class="logo">
+                    <div class="logo-icon">VI</div>
+                    <span>IM 95 vision inspection unit Control System</span>
+                </div>
+            </div>
+
+            <div class="header-center">
+                <div class="fullscreen-hint">
+                    <span>To exit full screen, press and hold</span>
+                    <kbd>Esc</kbd>
+                </div>
+            </div>
+
+            <div class="header-right">
+                <button class="theme-toggle" onclick="toggleTheme()">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <div class="operator-info">
+                    <div class="operator-details">
+                        <span>Operator: Admin</span>
+                        <span>Shift: Day</span>
+                    </div>
+                    <div class="datetime">
+                        <span id="datetime">7/14/2025, 1:25:36 PM</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Home Page -->
+            <div id="home-page" class="page active">
+                <div class="content-grid">
+                    <!-- Left Column -->
+                    <div class="left-column">
+                        <!-- Machine Status -->
+                        <div class="card machine-status">
+                            <h3>Machine Status</h3>
+                            <div class="status-indicator">
+                                <div class="status-icon">
+                                    <i class="fas fa-pause-circle"></i>
+                                </div>
+                                <div class="status-info">
+                                    <div class="status-title">Paused</div>
+                                    <div class="status-description">Machine operation paused</div>
+                                </div>
+                            </div>
+
+                            <div class="metrics-grid">
+                                <div class="metric">
+                                    <div class="metric-label">Operating Time</div>
+                                    <div class="metric-value">5:23:12</div>
+                                </div>
+                                <div class="metric">
+                                    <div class="metric-label">Cycle Count</div>
+                                    <div class="metric-value">1,234</div>
+                                </div>
+                                <div class="metric">
+                                    <div class="metric-label">Production Rate</div>
+                                    <div class="metric-value">0 units/hr</div>
+                                </div>
+                                <div class="metric">
+                                    <div class="metric-label">Efficiency</div>
+                                    <div class="metric-value">0%</div>
+                                </div>
+                            </div>
+
+                            <div class="pressure-section">
+                                <div class="pressure-info">
+                                    <i class="fas fa-bolt pressure-icon"></i>
+                                    <div class="pressure-details">
+                                        <span class="pressure-label">Pressure</span>
+                                        <span class="pressure-value">42 PSI</span>
+                                    </div>
+                                </div>
+                                <div class="pressure-bar">
+                                    <div class="pressure-fill" style="width: 42%"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Alerts & Notifications -->
+                        <div class="card alerts-panel">
+                            <div class="alerts-header">
+                                <div class="alerts-title">
+                                    <i class="fas fa-bell"></i>
+                                    <span>Alerts & Notifications</span>
+                                </div>
+                                <div class="alerts-count">2 Items</div>
+                            </div>
+
+                            <div class="alerts-list">
+                                <div class="alert alert-info">
+                                    <div class="alert-icon">
+                                        <i class="fas fa-info-circle"></i>
+                                    </div>
+                                    <div class="alert-content">
+                                        <div class="alert-title">System startup complete</div>
+                                        <div class="alert-time">09:10:22</div>
+                                    </div>
+                                </div>
+
+                                <div class="alert alert-warning">
+                                    <div class="alert-icon">
+                                        <i class="fas fa-exclamation-triangle"></i>
+                                    </div>
+                                    <div class="alert-content">
+                                        <div class="alert-title">Filter replacement due in 48 hours</div>
+                                        <div class="alert-time">09:42:31</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="alerts-actions">
+                                <button class="alert-action">Mark all as read</button>
+                                <button class="alert-action">View all alerts</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column -->
+                    <div class="right-column">
+                        <!-- Control Panel -->
+                        <div class="card control-panel">
+                            <h3>Control Panel</h3>
+                            <div class="control-buttons">
+                                <button class="control-btn initializing-btn" id="initBtn" onclick="initializeSystem()">
+                                    <i class="fas fa-cog"></i>
+                                    <span>Initializing</span>
+                                </button>
+                                <button class="control-btn start-btn" id="startBtn" onclick="toggleStartPause()">
+                                    <i class="fas fa-play"></i>
+                                    <span>Start</span>
+                                </button>
+                                <button class="control-btn emergency-stop-btn" id="emergencyBtn"
+                                    onclick="emergencyStop()">
+                                    <i class="fas fa-hand-paper"></i>
+                                    <span>Emergency Stop</span>
+                                </button>
+                            </div>
+
+                            <div class="quick-controls">
+                                <h4>Quick Controls</h4>
+                                <div class="quick-buttons">
+                                    <button class="quick-btn">Reset Counter</button>
+                                    <button class="quick-btn">Clear Alerts</button>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <!-- Production Counters -->
+                        <div class="card production-counters">
+                            <h3>Production Counters</h3>
+                            <div class="counters-grid">
+                                <div class="counter">
+                                    <div class="counter-header">
+                                        <span class="counter-label">Cup Count</span>
+                                    </div>
+                                    <div class="counter-value">0</div>
+                                    <div class="counter-dots">
+                                        <span class="dot green"></span>
+                                        <span class="dot green"></span>
+                                        <span class="dot green"></span>
+                                    </div>
+                                </div>
+
+                                <div class="counter">
+                                    <div class="counter-header">
+                                        <span class="counter-label">Rejection Count</span>
+                                    </div>
+                                    <div class="counter-value">0</div>
+                                    <div class="counter-dots">
+                                        <span class="dot red"></span>
+                                        <span class="dot red"></span>
+                                        <span class="dot red"></span>
+                                    </div>
+                                </div>
+
+                                <div class="counter">
+                                    <div class="counter-header">
+                                        <span class="counter-label">Stack Count</span>
+                                    </div>
+                                    <div class="counter-value">0</div>
+                                    <div class="counter-dots">
+                                        <span class="dot green"></span>
+                                        <span class="dot green"></span>
+                                        <span class="dot green"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Virtual Keyboard -->
+            <div id="virtualKeyboard" class="virtual-keyboard">
+                <div class="keyboard-header">
+                    <span>Virtual Keyboard</span>
+                    <button class="close-keyboard" onclick="toggleKeyboard()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="keyboard-body">
+                    <div class="keyboard-row">
+                        <button class="key" onclick="typeKey('1')">1</button>
+                        <button class="key" onclick="typeKey('2')">2</button>
+                        <button class="key" onclick="typeKey('3')">3</button>
+                        <button class="key" onclick="typeKey('4')">4</button>
+                        <button class="key" onclick="typeKey('5')">5</button>
+                        <button class="key" onclick="typeKey('6')">6</button>
+                        <button class="key" onclick="typeKey('7')">7</button>
+                        <button class="key" onclick="typeKey('8')">8</button>
+                        <button class="key" onclick="typeKey('9')">9</button>
+                        <button class="key" onclick="typeKey('0')">0</button>
+                        <button class="key backspace" onclick="backspace()">
+                            <i class="fas fa-backspace"></i>
+                        </button>
+                    </div>
+                    <div class="keyboard-row">
+                        <button class="key" onclick="typeKey('q')">Q</button>
+                        <button class="key" onclick="typeKey('w')">W</button>
+                        <button class="key" onclick="typeKey('e')">E</button>
+                        <button class="key" onclick="typeKey('r')">R</button>
+                        <button class="key" onclick="typeKey('t')">T</button>
+                        <button class="key" onclick="typeKey('y')">Y</button>
+                        <button class="key" onclick="typeKey('u')">U</button>
+                        <button class="key" onclick="typeKey('i')">I</button>
+                        <button class="key" onclick="typeKey('o')">O</button>
+                        <button class="key" onclick="typeKey('p')">P</button>
+                    </div>
+                    <div class="keyboard-row">
+                        <button class="key" onclick="typeKey('a')">A</button>
+                        <button class="key" onclick="typeKey('s')">S</button>
+                        <button class="key" onclick="typeKey('d')">D</button>
+                        <button class="key" onclick="typeKey('f')">F</button>
+                        <button class="key" onclick="typeKey('g')">G</button>
+                        <button class="key" onclick="typeKey('h')">H</button>
+                        <button class="key" onclick="typeKey('j')">J</button>
+                        <button class="key" onclick="typeKey('k')">K</button>
+                        <button class="key" onclick="typeKey('l')">L</button>
+                    </div>
+                    <div class="keyboard-row">
+                        <button class="key caps" onclick="toggleCaps()">
+                            <i class="fas fa-arrow-up"></i>
+                        </button>
+                        <button class="key" onclick="typeKey('z')">Z</button>
+                        <button class="key" onclick="typeKey('x')">X</button>
+                        <button class="key" onclick="typeKey('c')">C</button>
+                        <button class="key" onclick="typeKey('v')">V</button>
+                        <button class="key" onclick="typeKey('b')">B</button>
+                        <button class="key" onclick="typeKey('n')">N</button>
+                        <button class="key" onclick="typeKey('m')">M</button>
+                        <button class="key" onclick="typeKey('.')">.</button>
+                    </div>
+                    <div class="keyboard-row">
+                        <button class="key space" onclick="typeKey(' ')">Space</button>
+                        <button class="key" onclick="typeKey('-')">-</button>
+                        <button class="key" onclick="typeKey('_')">_</button>
+                        <button class="key enter" onclick="enterKey()">
+                            <i class="fas fa-arrow-turn-down"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Bottom Navigation -->
+
+    </div>
+
+    <nav class="bottom-nav">
+        <a href="/" class="nav-tab active">
+            <i class="fas fa-home"></i>
+            <span>Home</span>
+        </a>
+        <a href="settings" class="nav-tab">
+            <i class="fas fa-cog"></i>
+            <span>Settings</span>
+        </a>
+        <a href="analytics" class="nav-tab">
+            <i class="fas fa-chart-bar"></i>
+            <span>Analytics</span>
+        </a>
+        <button class="nav-tab">
+            <i class="fas fa-tools"></i>
+            <span>Maintenance</span>
+        </button>
+        <button class="nav-tab" onclick="toggleKeyboard()">
+            <i class="fas fa-keyboard"></i>
+            <span>Keyboard</span>
+        </button>
+    </nav>
+
+    <script src="static/script.js"></script>
+
+</body>
+
+</html>

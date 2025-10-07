@@ -1,0 +1,1103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Machine Control System - Settings</title>
+    <link rel="stylesheet" href="static/settings.css">
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+
+<body class="dark-theme">
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-left">
+                <div class="logo">
+                    <div class="logo-icon">VI</div>
+                    <span>IM 95 vision inspection unit Control System</span>
+                </div>
+            </div>
+
+            <div class="header-center">
+                <div class="fullscreen-hint">
+                    <span>To exit full screen, press and hold</span>
+                    <kbd>Esc</kbd>
+                </div>
+            </div>
+
+            <div class="header-right">
+                <button class="theme-toggle" onclick="toggleTheme()">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <div class="operator-info">
+                    <div class="operator-details">
+                        <span>Operator: Admin</span>
+                        <span>Shift: Day</span>
+                    </div>
+                    <div class="datetime">
+                        <span id="datetime">7/14/2025, 1:25:36 PM</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="settings-grid">
+                <!-- Solenoid Controls -->
+                <div class="card solenoid-controls">
+                    <h3>Solenoid Controls</h3>
+                    <div class="solenoid-grid">
+                        <div class="solenoid-item">
+                            <div class="solenoid-header">
+                                <span class="solenoid-label">Solenoid 1</span>
+                                <div class="status-indicator red"></div>
+                            </div>
+                            <button class="toggle-btn off 01" onclick="toggleSolenoid(this)">
+                                <i class="fas fa-power-off"></i>
+                                <span>OFF</span>
+                            </button>
+                        </div>
+
+                        <div class="solenoid-item">
+                            <div class="solenoid-header">
+                                <span class="solenoid-label">Solenoid 2</span>
+                                <div class="status-indicator red"></div>
+                            </div>
+                            <button class="toggle-btn off 02" onclick="toggleSolenoid(this)">
+                                <i class="fas fa-power-off"></i>
+                                <span>OFF</span>
+                            </button>
+                        </div>
+
+                        <div class="solenoid-item">
+                            <div class="solenoid-header">
+                                <span class="solenoid-label">Solenoid 3</span>
+                                <div class="status-indicator red"></div>
+                            </div>
+                            <button class="toggle-btn off 03" onclick="toggleSolenoid(this)">
+                                <i class="fas fa-power-off"></i>
+                                <span>OFF</span>
+                            </button>
+                        </div>
+
+                        <div class="solenoid-item">
+                            <div class="solenoid-header">
+                                <span class="solenoid-label">Solenoid 4</span>
+                                <div class="status-indicator red"></div>
+                            </div>
+                            <button class="toggle-btn off 04" onclick="toggleSolenoid(this)">
+                                <i class="fas fa-power-off"></i>
+                                <span>OFF</span>
+                            </button>
+                        </div>
+
+                        <div class="solenoid-item">
+                            <div class="solenoid-header">
+                                <span class="solenoid-label">Solenoid 5</span>
+                                <div class="status-indicator red"></div>
+                            </div>
+                            <button class="toggle-btn off 05" onclick="toggleSolenoid(this)">
+                                <i class="fas fa-power-off"></i>
+                                <span>OFF</span>
+                            </button>
+                        </div>
+
+                        <div class="solenoid-item">
+                            <div class="solenoid-header">
+                                <span class="solenoid-label">Solenoid 6</span>
+                                <div class="status-indicator red"></div>
+                            </div>
+                            <button class="toggle-btn off 06" onclick="toggleSolenoid(this)">
+                                <i class="fas fa-power-off"></i>
+                                <span>OFF</span>
+                            </button>
+                        </div>
+
+                        <div class="solenoid-item">
+                            <div class="solenoid-header">
+                                <span class="solenoid-label">Solenoid 7</span>
+                                <div class="status-indicator red"></div>
+                            </div>
+                            <button class="toggle-btn off 07" onclick="toggleSolenoid(this)">
+                                <i class="fas fa-power-off"></i>
+                                <span>OFF</span>
+                            </button>
+                        </div>
+
+                        <div class="solenoid-item">
+                            <div class="solenoid-header">
+                                <span class="solenoid-label">Solenoid 8</span>
+                                <div class="status-indicator red"></div>
+                            </div>
+                            <button class="toggle-btn off 08" onclick="toggleSolenoid(this)">
+                                <i class="fas fa-power-off"></i>
+                                <span>OFF</span>
+                            </button>
+                        </div>
+
+                        <div class="solenoid-item">
+                            <div class="solenoid-header">
+                                <span class="solenoid-label">Solenoid 9</span>
+                                <div class="status-indicator red"></div>
+                            </div>
+                            <button class="toggle-btn off 09" onclick="toggleSolenoid(this)">
+                                <i class="fas fa-power-off"></i>
+                                <span>OFF</span>
+                            </button>
+                        </div>
+
+                        <div class="solenoid-item">
+                            <div class="solenoid-header">
+                                <span class="solenoid-label">Solenoid 10</span>
+                                <div class="status-indicator red"></div>
+                            </div>
+                            <button class="toggle-btn off 10" onclick="toggleSolenoid(this)">
+                                <i class="fas fa-power-off"></i>
+                                <span>OFF</span>
+                            </button>
+                        </div>
+
+                        <div class="solenoid-item">
+                            <div class="solenoid-header">
+                                <span class="solenoid-label">Solenoid 11</span>
+                                <div class="status-indicator red"></div>
+                            </div>
+                            <button class="toggle-btn off 11" onclick="toggleSolenoid(this)">
+                                <i class="fas fa-power-off"></i>
+                                <span>OFF</span>
+                            </button>
+                        </div>
+
+                        <div class="solenoid-item">
+                            <div class="solenoid-header">
+                                <span class="solenoid-label">Solenoid 12</span>
+                                <div class="status-indicator red"></div>
+                            </div>
+                            <button class="toggle-btn off 12" onclick="toggleSolenoid(this)">
+                                <i class="fas fa-power-off"></i>
+                                <span>OFF</span>
+                            </button>
+                        </div>
+
+                        <div class="solenoid-item">
+                            <div class="solenoid-header">
+                                <span class="solenoid-label">Solenoid 13</span>
+                                <div class="status-indicator red"></div>
+                            </div>
+                            <button class="toggle-btn off 13" onclick="toggleSolenoid(this)">
+                                <i class="fas fa-power-off"></i>
+                                <span>OFF</span>
+                            </button>
+                        </div>
+
+                        <div class="solenoid-item">
+                            <div class="solenoid-header">
+                                <span class="solenoid-label">Solenoid 14</span>
+                                <div class="status-indicator red"></div>
+                            </div>
+                            <button class="toggle-btn off 14" onclick="toggleSolenoid(this)">
+                                <i class="fas fa-power-off"></i>
+                                <span>OFF</span>
+                            </button>
+                        </div>
+                        <div class="solenoid-item">
+                            <div class="solenoid-header">
+                                <span class="solenoid-label">Solenoid 15</span>
+                                <div class="status-indicator red"></div>
+                            </div>
+                            <button class="toggle-btn off 15" onclick="toggleSolenoid(this)">
+                                <i class="fas fa-power-off"></i>
+                                <span>OFF</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <br></br>
+                    <h3>Input Monitoring</h3>
+
+                    <div class="solenoid-grid">
+                        <div class="solenoid-item">
+                            <div class="solenoid-header">
+                                <span class="solenoid-label">IO 1</span>
+                                <div class="status-indicator red"></div>
+                            </div>
+                            <button class="toggle-btn off 01" onclick="toggleSolenoid(this)">
+                                <i class="fas fa-power-off"></i>
+                                <span>OFF</span>
+                            </button>
+                        </div>
+
+                        <div class="solenoid-item">
+                            <div class="solenoid-header">
+                                <span class="solenoid-label">IO 2</span>
+                                <div class="status-indicator red"></div>
+                            </div>
+                            <button class="toggle-btn off 02" onclick="toggleSolenoid(this)">
+                                <i class="fas fa-power-off"></i>
+                                <span>OFF</span>
+                            </button>
+                        </div>
+
+                        <div class="solenoid-item">
+                            <div class="solenoid-header">
+                                <span class="solenoid-label">IO 3</span>
+                                <div class="status-indicator red"></div>
+                            </div>
+                            <button class="toggle-btn off 03" onclick="toggleSolenoid(this)">
+                                <i class="fas fa-power-off"></i>
+                                <span>OFF</span>
+                            </button>
+                        </div>
+
+                        <div class="solenoid-item">
+                            <div class="solenoid-header">
+                                <span class="solenoid-label">IO 4</span>
+                                <div class="status-indicator red"></div>
+                            </div>
+                            <button class="toggle-btn off 04" onclick="toggleSolenoid(this)">
+                                <i class="fas fa-power-off"></i>
+                                <span>OFF</span>
+                            </button>
+                        </div>
+
+                        <div class="solenoid-item">
+                            <div class="solenoid-header">
+                                <span class="solenoid-label">IO 5</span>
+                                <div class="status-indicator red"></div>
+                            </div>
+                            <button class="toggle-btn off 05" onclick="toggleSolenoid(this)">
+                                <i class="fas fa-power-off"></i>
+                                <span>OFF</span>
+                            </button>
+                        </div>
+
+                        <div class="solenoid-item">
+                            <div class="solenoid-header">
+                                <span class="solenoid-label">IO 6</span>
+                                <div class="status-indicator red"></div>
+                            </div>
+                            <button class="toggle-btn off 06" onclick="toggleSolenoid(this)">
+                                <i class="fas fa-power-off"></i>
+                                <span>OFF</span>
+                            </button>
+                        </div>
+
+                        <div class="solenoid-item">
+                            <div class="solenoid-header">
+                                <span class="solenoid-label">IO 7</span>
+                                <div class="status-indicator red"></div>
+                            </div>
+                            <button class="toggle-btn off 07" onclick="toggleSolenoid(this)">
+                                <i class="fas fa-power-off"></i>
+                                <span>OFF</span>
+                            </button>
+                        </div>
+
+                        <div class="solenoid-item">
+                            <div class="solenoid-header">
+                                <span class="solenoid-label">IO 8</span>
+                                <div class="status-indicator red"></div>
+                            </div>
+                            <button class="toggle-btn off 08" onclick="toggleSolenoid(this)">
+                                <i class="fas fa-power-off"></i>
+                                <span>OFF</span>
+                            </button>
+                        </div>
+
+                        <div class="solenoid-item">
+                            <div class="solenoid-header">
+                                <span class="solenoid-label">IO 9</span>
+                                <div class="status-indicator red"></div>
+                            </div>
+                            <button class="toggle-btn off 09" onclick="toggleSolenoid(this)">
+                                <i class="fas fa-power-off"></i>
+                                <span>OFF</span>
+                            </button>
+                        </div>
+
+                        <div class="solenoid-item">
+                            <div class="solenoid-header">
+                                <span class="solenoid-label">IO 10</span>
+                                <div class="status-indicator red"></div>
+                            </div>
+                            <button class="toggle-btn off 10" onclick="toggleSolenoid(this)">
+                                <i class="fas fa-power-off"></i>
+                                <span>OFF</span>
+                            </button>
+                        </div>
+
+                        <div class="solenoid-item">
+                            <div class="solenoid-header">
+                                <span class="solenoid-label">IO 11</span>
+                                <div class="status-indicator red"></div>
+                            </div>
+                            <button class="toggle-btn off 11" onclick="toggleSolenoid(this)">
+                                <i class="fas fa-power-off"></i>
+                                <span>OFF</span>
+                            </button>
+                        </div>
+
+                        <div class="solenoid-item">
+                            <div class="solenoid-header">
+                                <span class="solenoid-label">IO 12</span>
+                                <div class="status-indicator red"></div>
+                            </div>
+                            <button class="toggle-btn off 12" onclick="toggleSolenoid(this)">
+                                <i class="fas fa-power-off"></i>
+                                <span>OFF</span>
+                            </button>
+                        </div>
+
+                        <div class="solenoid-item">
+                            <div class="solenoid-header">
+                                <span class="solenoid-label">IO 13</span>
+                                <div class="status-indicator red"></div>
+                            </div>
+                            <button class="toggle-btn off 13" onclick="toggleSolenoid(this)">
+                                <i class="fas fa-power-off"></i>
+                                <span>OFF</span>
+                            </button>
+                        </div>
+
+                        <div class="solenoid-item">
+                            <div class="solenoid-header">
+                                <span class="solenoid-label">IO 14</span>
+                                <div class="status-indicator red"></div>
+                            </div>
+                            <button class="toggle-btn off 14" onclick="toggleSolenoid(this)">
+                                <i class="fas fa-power-off"></i>
+                                <span>OFF</span>
+                            </button>
+                        </div>
+                        <div class="solenoid-item">
+                            <div class="solenoid-header">
+                                <span class="solenoid-label">IO 15</span>
+                                <div class="status-indicator red"></div>
+                            </div>
+                            <button class="toggle-btn off 15" onclick="toggleSolenoid(this)">
+                                <i class="fas fa-power-off"></i>
+                                <span>OFF</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Servo Motor Controls -->
+                <div class="card servo-controls">
+                    <h3>Servo Motor Controls</h3>
+                    <div class="servo-list">
+                        <div class="servo-item">
+                            <div class="servo-header">
+                                <span class="servo-label">Servo Motor 1</span>
+                                <div class="servo-status">
+                                    <i class="fas fa-circle"></i>
+                                    <i class="fas fa-circle"></i>
+                                </div>
+                            </div>
+                            <div class="position-display">
+                                <span class="position-label">Current Position</span>
+                                <span class="position-value" data-motor="1">0.0</span>
+                            </div>
+                            <div class="position-controls">
+                                <button class="position-btn minus-btn" onclick="adjustPosition(1, -0.1)">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <button class="position-btn default-btn" onclick="resetPosition(1)">
+                                    Default
+                                </button>
+                                <button class="position-btn plus-btn" onclick="adjustPosition(1, 0.1)">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="servo-item">
+                            <div class="servo-header">
+                                <span class="servo-label">Servo Motor 2</span>
+                                <div class="servo-status">
+                                    <i class="fas fa-circle"></i>
+                                    <i class="fas fa-circle"></i>
+                                </div>
+                            </div>
+                            <div class="position-display">
+                                <span class="position-label">Current Position</span>
+                                <span class="position-value" data-motor="2">0.0</span>
+                            </div>
+                            <div class="position-controls">
+                                <button class="position-btn minus-btn" onclick="adjustPosition(2, -0.1)">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <button class="position-btn default-btn" onclick="resetPosition(2)">
+                                    Default
+                                </button>
+                                <button class="position-btn plus-btn" onclick="adjustPosition(2, 0.1)">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="servo-item">
+                            <div class="servo-header">
+                                <span class="servo-label">Servo Motor 3</span>
+                                <div class="servo-status">
+                                    <i class="fas fa-circle"></i>
+                                    <i class="fas fa-circle"></i>
+                                </div>
+                            </div>
+                            <div class="position-display">
+                                <span class="position-label">Current Position</span>
+                                <span class="position-value" data-motor="3">0.0</span>
+                            </div>
+                            <div class="position-controls">
+                                <button class="position-btn minus-btn" onclick="adjustPosition(3, -0.1)">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <button class="position-btn default-btn" onclick="resetPosition(3)">
+                                    Default
+                                </button>
+                                <button class="position-btn plus-btn" onclick="adjustPosition(3, 0.1)">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="servo-item">
+                            <div class="servo-header">
+                                <span class="servo-label">Servo Motor 4</span>
+                                <div class="servo-status">
+                                    <i class="fas fa-circle"></i>
+                                    <i class="fas fa-circle"></i>
+                                </div>
+                            </div>
+                            <div class="position-display">
+                                <span class="position-label">Current Position</span>
+                                <span class="position-value" data-motor="4">0.0</span>
+                            </div>
+                            <div class="position-controls">
+                                <button class="position-btn minus-btn" onclick="adjustPosition(4, -0.1)">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <button class="position-btn default-btn" onclick="resetPosition(4)">
+                                    Default
+                                </button>
+                                <button class="position-btn plus-btn" onclick="adjustPosition(4, 0.1)">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="servo-item">
+                            <div class="servo-header">
+                                <span class="servo-label">Servo Motor 5</span>
+                                <div class="servo-status">
+                                    <i class="fas fa-circle"></i>
+                                    <i class="fas fa-circle"></i>
+                                </div>
+                            </div>
+                            <div class="position-display">
+                                <span class="position-label">Current Position</span>
+                                <span class="position-value" data-motor="5">0.0</span>
+                            </div>
+                            <div class="position-controls">
+                                <button class="position-btn minus-btn" onclick="adjustPosition(5, -0.1)">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <button class="position-btn default-btn" onclick="resetPosition(5)">
+                                    Default
+                                </button>
+                                <button class="position-btn plus-btn" onclick="adjustPosition(5, 0.1)">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="servo-item">
+                            <div class="servo-header">
+                                <span class="servo-label">Servo Motor 6</span>
+                                <div class="servo-status">
+                                    <i class="fas fa-circle"></i>
+                                    <i class="fas fa-circle"></i>
+                                </div>
+                            </div>
+                            <div class="position-display">
+                                <span class="position-label">Current Position</span>
+                                <span class="position-value" data-motor="6">0.0</span>
+                            </div>
+                            <div class="position-controls">
+                                <button class="position-btn minus-btn" onclick="adjustPosition(6, -0.1)">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <button class="position-btn default-btn" onclick="resetPosition(6)">
+                                    Default
+                                </button>
+                                <button class="position-btn plus-btn" onclick="adjustPosition(6, 0.1)">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="servo-item">
+                            <div class="servo-header">
+                                <span class="servo-label">Servo Motor 7</span>
+                                <div class="servo-status">
+                                    <i class="fas fa-circle"></i>
+                                    <i class="fas fa-circle"></i>
+                                </div>
+                            </div>
+                            <div class="position-display">
+                                <span class="position-label">Current Position</span>
+                                <span class="position-value" data-motor="7">0.0</span>
+                            </div>
+                            <div class="position-controls">
+                                <button class="position-btn minus-btn" onclick="adjustPosition(7, -0.1)">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <button class="position-btn default-btn" onclick="resetPosition(7)">
+                                    Default
+                                </button>
+                                <button class="position-btn plus-btn" onclick="adjustPosition(7, 0.1)">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Camera Monitoring -->
+                <div class="card camera-controls">
+                    <h3>Camera Monitoring</h3>
+                    <div class="camera-grid">
+                        <div class="camera-item">
+                            <div class="camera-header">
+                                <div class="camera-info">
+                                    <i class="fas fa-video"></i>
+                                    <span>Camera 1</span>
+                                </div>
+                                <div class="camera-controls-top">
+                                    <i class="fas fa-eye"></i>
+                                    <i class="fas fa-expand"></i>
+                                </div>
+                            </div>
+                            <div class="camera-feed">
+                                <span class="feed-label">Camera Feed 1</span>
+                                <div class="live-indicator">● LIVE</div>
+                            </div>
+                            <div class="camera-buttons">
+                                <button class="camera-btn settings-btn">Settings</button>
+                                <div class="quality-status good">
+                                    <i class="fas fa-circle"></i>
+                                    <span>Good</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="camera-item">
+                            <div class="camera-header">
+                                <div class="camera-info">
+                                    <i class="fas fa-video"></i>
+                                    <span>Camera 2</span>
+                                </div>
+                                <div class="camera-controls-top">
+                                    <i class="fas fa-eye"></i>
+                                    <i class="fas fa-expand"></i>
+                                </div>
+                            </div>
+                            <div class="camera-feed">
+                                <span class="feed-label">Camera Feed 2</span>
+                                <div class="live-indicator">● LIVE</div>
+                            </div>
+                            <div class="camera-buttons">
+                                <button class="camera-btn settings-btn">Settings</button>
+                                <div class="quality-status good">
+                                    <i class="fas fa-circle"></i>
+                                    <span>Good</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="camera-item">
+                            <div class="camera-header">
+                                <div class="camera-info">
+                                    <i class="fas fa-video"></i>
+                                    <span>Camera 3</span>
+                                </div>
+                                <div class="camera-controls-top">
+                                    <i class="fas fa-eye"></i>
+                                    <i class="fas fa-expand"></i>
+                                </div>
+                            </div>
+                            <div class="camera-feed">
+                                <span class="feed-label">Camera Feed 3</span>
+                                <div class="live-indicator">● LIVE</div>
+                            </div>
+                            <div class="camera-buttons">
+                                <button class="camera-btn settings-btn">Settings</button>
+                                <div class="quality-status not-good">
+                                    <i class="fas fa-circle"></i>
+                                    <span>Not Good</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="camera-item">
+                            <div class="camera-header">
+                                <div class="camera-info">
+                                    <i class="fas fa-video"></i>
+                                    <span>Camera 4</span>
+                                </div>
+                                <div class="camera-controls-top">
+                                    <i class="fas fa-eye"></i>
+                                    <i class="fas fa-expand"></i>
+                                </div>
+                            </div>
+                            <div class="camera-feed">
+                                <span class="feed-label">Camera Feed 4</span>
+                                <div class="live-indicator">● LIVE</div>
+                            </div>
+                            <div class="camera-buttons">
+                                <button class="camera-btn settings-btn">Settings</button>
+                                <div class="quality-status good">
+                                    <i class="fas fa-circle"></i>
+                                    <span>Good</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <br><br>
+                     <h3>Presure Zone</h3>
+                    <div class="camera-grid">
+                        <div class="camera-item">
+                            <div class="camera-header">
+                                <div class="camera-info">
+                                    <i class="fas fa-video"></i>
+                                    <span>Camera 1</span>
+                                </div>
+                                <div class="camera-controls-top">
+                                    <i class="fas fa-eye"></i>
+                                    <i class="fas fa-expand"></i>
+                                </div>
+                            </div>
+                            <div class="camera-feed">
+                                <span class="feed-label">Camera Feed 1</span>
+                                <div class="live-indicator">● LIVE</div>
+                            </div>
+                            <div class="camera-buttons">
+                                <button class="camera-btn settings-btn">Settings</button>
+                                <div class="quality-status good">
+                                    <i class="fas fa-circle"></i>
+                                    <span>Good</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="camera-item">
+                            <div class="camera-header">
+                                <div class="camera-info">
+                                    <i class="fas fa-video"></i>
+                                    <span>Camera 2</span>
+                                </div>
+                                <div class="camera-controls-top">
+                                    <i class="fas fa-eye"></i>
+                                    <i class="fas fa-expand"></i>
+                                </div>
+                            </div>
+                            <div class="camera-feed">
+                                <span class="feed-label">Camera Feed 2</span>
+                                <div class="live-indicator">● LIVE</div>
+                            </div>
+                            <div class="camera-buttons">
+                                <button class="camera-btn settings-btn">Settings</button>
+                                <div class="quality-status good">
+                                    <i class="fas fa-circle"></i>
+                                    <span>Good</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="camera-item">
+                            <div class="camera-header">
+                                <div class="camera-info">
+                                    <i class="fas fa-video"></i>
+                                    <span>Camera 3</span>
+                                </div>
+                                <div class="camera-controls-top">
+                                    <i class="fas fa-eye"></i>
+                                    <i class="fas fa-expand"></i>
+                                </div>
+                            </div>
+                            <div class="camera-feed">
+                                <span class="feed-label">Camera Feed 3</span>
+                                <div class="live-indicator">● LIVE</div>
+                            </div>
+                            <div class="camera-buttons">
+                                <button class="camera-btn settings-btn">Settings</button>
+                                <div class="quality-status not-good">
+                                    <i class="fas fa-circle"></i>
+                                    <span>Not Good</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="camera-item">
+                            <div class="camera-header">
+                                <div class="camera-info">
+                                    <i class="fas fa-video"></i>
+                                    <span>Camera 4</span>
+                                </div>
+                                <div class="camera-controls-top">
+                                    <i class="fas fa-eye"></i>
+                                    <i class="fas fa-expand"></i>
+                                </div>
+                            </div>
+                            <div class="camera-feed">
+                                <span class="feed-label">Camera Feed 4</span>
+                                <div class="live-indicator">● LIVE</div>
+                            </div>
+                            <div class="camera-buttons">
+                                <button class="camera-btn settings-btn">Settings</button>
+                                <div class="quality-status good">
+                                    <i class="fas fa-circle"></i>
+                                    <span>Good</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </main>
+
+        <!-- Bottom Navigation -->
+        <nav class="bottom-nav">
+            <a href="/" class="nav-tab">
+                <i class="fas fa-home"></i>
+                <span>Home</span>
+            </a>
+            <a href="settings" class="nav-tab active">
+                <i class="fas fa-cog"></i>
+                <span>Settings</span>
+            </a>
+            <a href="analytics" class="nav-tab">
+                <i class="fas fa-chart-bar"></i>
+                <span>Analytics</span>
+            </a>
+            <button class="nav-tab">
+                <i class="fas fa-tools"></i>
+                <span>Maintenance</span>
+            </button>
+            <button class="nav-tab" onclick="toggleKeyboard()">
+                <i class="fas fa-keyboard"></i>
+                <span>Keyboard</span>
+            </button>
+        </nav>
+
+        <!-- Virtual Keyboard -->
+        <div id="virtualKeyboard" class="virtual-keyboard">
+            <div class="keyboard-header">
+                <span>Virtual Keyboard</span>
+                <button class="close-keyboard" onclick="toggleKeyboard()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="keyboard-body">
+                <div class="keyboard-row">
+                    <button class="key" onclick="typeKey('1')">1</button>
+                    <button class="key" onclick="typeKey('2')">2</button>
+                    <button class="key" onclick="typeKey('3')">3</button>
+                    <button class="key" onclick="typeKey('4')">4</button>
+                    <button class="key" onclick="typeKey('5')">5</button>
+                    <button class="key" onclick="typeKey('6')">6</button>
+                    <button class="key" onclick="typeKey('7')">7</button>
+                    <button class="key" onclick="typeKey('8')">8</button>
+                    <button class="key" onclick="typeKey('9')">9</button>
+                    <button class="key" onclick="typeKey('0')">0</button>
+                    <button class="key backspace" onclick="backspace()">
+                        <i class="fas fa-backspace"></i>
+                    </button>
+                </div>
+                <div class="keyboard-row">
+                    <button class="key" onclick="typeKey('q')">Q</button>
+                    <button class="key" onclick="typeKey('w')">W</button>
+                    <button class="key" onclick="typeKey('e')">E</button>
+                    <button class="key" onclick="typeKey('r')">R</button>
+                    <button class="key" onclick="typeKey('t')">T</button>
+                    <button class="key" onclick="typeKey('y')">Y</button>
+                    <button class="key" onclick="typeKey('u')">U</button>
+                    <button class="key" onclick="typeKey('i')">I</button>
+                    <button class="key" onclick="typeKey('o')">O</button>
+                    <button class="key" onclick="typeKey('p')">P</button>
+                </div>
+                <div class="keyboard-row">
+                    <button class="key" onclick="typeKey('a')">A</button>
+                    <button class="key" onclick="typeKey('s')">S</button>
+                    <button class="key" onclick="typeKey('d')">D</button>
+                    <button class="key" onclick="typeKey('f')">F</button>
+                    <button class="key" onclick="typeKey('g')">G</button>
+                    <button class="key" onclick="typeKey('h')">H</button>
+                    <button class="key" onclick="typeKey('j')">J</button>
+                    <button class="key" onclick="typeKey('k')">K</button>
+                    <button class="key" onclick="typeKey('l')">L</button>
+                </div>
+                <div class="keyboard-row">
+                    <button class="key caps" onclick="toggleCaps()">
+                        <i class="fas fa-arrow-up"></i>
+                    </button>
+                    <button class="key" onclick="typeKey('z')">Z</button>
+                    <button class="key" onclick="typeKey('x')">X</button>
+                    <button class="key" onclick="typeKey('c')">C</button>
+                    <button class="key" onclick="typeKey('v')">V</button>
+                    <button class="key" onclick="typeKey('b')">B</button>
+                    <button class="key" onclick="typeKey('n')">N</button>
+                    <button class="key" onclick="typeKey('m')">M</button>
+                    <button class="key" onclick="typeKey('.')">.</button>
+                </div>
+                <div class="keyboard-row">
+                    <button class="key space" onclick="typeKey(' ')">Space</button>
+                    <button class="key" onclick="typeKey('-')">-</button>
+                    <button class="key" onclick="typeKey('_')">_</button>
+                    <button class="key enter" onclick="enterKey()">
+                        <i class="fas fa-arrow-turn-down"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="static/servo-controls.js"></script>
+    <script>
+        var socket = io();
+
+        function toggleTheme() {
+            const body = document.body;
+            const themeToggle = document.querySelector('.theme-toggle i');
+
+            if (body.classList.contains('dark-theme')) {
+                body.classList.remove('dark-theme');
+                body.classList.add('light-theme');
+                themeToggle.className = 'fas fa-sun';
+                localStorage.setItem('theme', 'light');
+            } else {
+                body.classList.remove('light-theme');
+                body.classList.add('dark-theme');
+                themeToggle.className = 'fas fa-moon';
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+
+        // Load saved theme on page load
+        function loadTheme() {
+            const savedTheme = localStorage.getItem('theme') || 'dark';
+            const body = document.body;
+            const themeToggle = document.querySelector('.theme-toggle i');
+
+            if (savedTheme === 'light') {
+                body.classList.remove('dark-theme');
+                body.classList.add('light-theme');
+                themeToggle.className = 'fas fa-sun';
+            } else {
+                body.classList.remove('light-theme');
+                body.classList.add('dark-theme');
+                themeToggle.className = 'fas fa-moon';
+            }
+        }
+
+        function toggleSolenoid(button) {
+            const solenoidItem = button.closest('.solenoid-item');
+            const statusIndicator = solenoidItem.querySelector('.status-indicator');
+            const text = button.querySelector('span');
+            console.log(button)
+            socket.emit('SOLONOID_ONOFF', button.className);
+
+            if (button.classList.contains('off')) {
+                button.classList.remove('off');
+                button.classList.add('on');
+                statusIndicator.classList.remove('red');
+                statusIndicator.classList.add('green');
+                text.textContent = 'ON';
+            } else {
+                button.classList.remove('on');
+                button.classList.add('off');
+                statusIndicator.classList.remove('green');
+                statusIndicator.classList.add('red');
+                text.textContent = 'OFF';
+            }
+            console.log(button.className);
+            // Save button states after toggle
+            saveButtonStates();
+        }
+
+        function updateSpeed(slider) {
+            const speedValue = slider.parentElement.querySelector('.speed-value');
+            speedValue.textContent = slider.value;
+
+            // Save button states after speed change
+            saveButtonStates();
+        }
+
+        function toggleMotor(button) {
+            const icon = button.querySelector('i');
+
+            if (button.classList.contains('running')) {
+                button.classList.remove('running');
+                icon.className = 'fas fa-play';
+                button.innerHTML = '<i class="fas fa-play"></i> Start';
+            } else {
+                button.classList.add('running');
+                icon.className = 'fas fa-pause';
+                button.innerHTML = '<i class="fas fa-pause"></i> Pause';
+            }
+
+            // Save button states after toggle
+            saveButtonStates();
+        }
+
+        function resetMotor(button) {
+            const servoItem = button.closest('.servo-item');
+            const speedSlider = servoItem.querySelector('.speed-slider');
+            const speedValue = servoItem.querySelector('.speed-value');
+            speedSlider.value = 10;
+            speedValue.textContent = '10';
+
+            // Save button states after reset
+            saveButtonStates();
+        }
+
+        function homeMotor(button) {
+            console.log('Homing motor...');
+        }
+
+        function toggleQuality(indicator) {
+            const icon = indicator.querySelector('i');
+            const text = indicator.querySelector('span');
+
+            if (indicator.classList.contains('good')) {
+                indicator.classList.remove('good');
+                indicator.classList.add('not-good');
+                icon.className = 'fas fa-times-circle';
+                text.textContent = 'Not Good';
+            } else {
+                indicator.classList.remove('not-good');
+                indicator.classList.add('good');
+                icon.className = 'fas fa-check-circle';
+                text.textContent = 'Good';
+            }
+        }
+
+        // Update datetime
+        function updateDateTime() {
+            const now = new Date();
+            const options = {
+                month: 'numeric',
+                day: 'numeric',
+                year: 'numeric',
+                hour: 'numeric',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: true
+            };
+            document.getElementById('datetime').textContent = now.toLocaleString('en-US', options);
+        }
+
+        // Save button states to localStorage
+        function saveButtonStates() {
+            const buttonStates = {
+                isRunning: false, // Settings page doesn't have main start button
+                solenoids: {},
+                servos: {},
+                servoPositions: servoPositions, // Save servo positions
+                timestamp: Date.now()
+            };
+
+            // Save solenoid states
+            document.querySelectorAll('.solenoid-item').forEach((item, index) => {
+                const button = item.querySelector('.toggle-btn');
+                if (button) {
+                    buttonStates.solenoids[index] = button.classList.contains('on');
+                }
+            });
+
+            // Get existing states to preserve main button state from other pages
+            const existingStates = localStorage.getItem('machineButtonStates');
+            if (existingStates) {
+                try {
+                    const existing = JSON.parse(existingStates);
+                    buttonStates.isRunning = existing.isRunning || false;
+                } catch (error) {
+                    console.error('Error parsing existing states:', error);
+                }
+            }
+
+            localStorage.setItem('machineButtonStates', JSON.stringify(buttonStates));
+        }
+
+        // Load button states from localStorage
+        function loadButtonStates() {
+            const savedStates = localStorage.getItem('machineButtonStates');
+            if (!savedStates) return;
+
+            try {
+                const buttonStates = JSON.parse(savedStates);
+
+                // Restore solenoid states
+                document.querySelectorAll('.solenoid-item').forEach((item, index) => {
+                    const button = item.querySelector('.toggle-btn');
+                    const statusIndicator = item.querySelector('.status-indicator');
+                    if (button && buttonStates.solenoids && buttonStates.solenoids[index]) {
+                        button.classList.remove('off');
+                        button.classList.add('on');
+                        button.querySelector('span').textContent = 'ON';
+                        if (statusIndicator) {
+                            statusIndicator.classList.remove('red');
+                            statusIndicator.classList.add('green');
+                        }
+                    }
+                });
+
+                // Restore servo positions
+                if (buttonStates.servoPositions) {
+                    servoPositions = buttonStates.servoPositions;
+                    // Update display
+                    for (let i = 1; i <= 7; i++) {
+                        const positionElement = document.querySelector(`[data-motor="${i}"]`);
+                        if (positionElement && servoPositions[i] !== undefined) {
+                            positionElement.textContent = servoPositions[i].toFixed(1);
+                        }
+                    }
+                }
+
+            } catch (error) {
+                console.error('Error loading button states:', error);
+            }
+        }
+
+        setInterval(updateDateTime, 1000);
+        updateDateTime();
+        loadTheme();
+        loadButtonStates();
+        setActiveNavTab();
+
+        // Set active navigation tab based on current page
+        function setActiveNavTab() {
+            const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+            const navTabs = document.querySelectorAll('.nav-tab');
+
+            navTabs.forEach(tab => {
+                tab.classList.remove('active');
+                const href = tab.getAttribute('href');
+                if (href && href.includes(currentPage)) {
+                    tab.classList.add('active');
+                }
+            });
+        }
+    </script>
+
+</body>
+
+</html>

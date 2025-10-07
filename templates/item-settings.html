@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IM 95 Machine Control System - Item Settings</title>
+    <link rel="stylesheet" href="static/item-settings.css">
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body class="dark-theme">
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-left">
+                <div class="logo">
+                    <div class="logo-icon">VI</div>
+                    <span>IM 95 vision inspection unit Control System</span>
+                </div>
+            </div>
+            
+            <div class="header-center">
+                <div class="fullscreen-hint">
+                    <span>To exit full screen, press and hold</span>
+                    <kbd>Esc</kbd>
+                </div>
+            </div>
+            
+            <div class="header-right">
+                <button class="theme-toggle" onclick="toggleTheme()">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <div class="operator-info">
+                    <div class="operator-details">
+                        <span>Operator: Admin</span>
+                        <span>Shift: Day</span>
+                    </div>
+                    <div class="datetime">
+                        <span id="datetime">7/14/2025, 1:25:36 PM</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Item Header -->
+            <div class="item-header">
+                <div class="item-info">
+                    <div class="item-icon">
+                        <i class="fas fa-cube"></i>
+                    </div>
+                    <div class="item-details">
+                        <h1 id="itemTitle">Item Settings</h1>
+                        <p id="itemSubtitle">Configure item parameters and settings</p>
+                    </div>
+                </div>
+                <div class="header-actions">
+                    <button class="btn btn-secondary" onclick="goBack()">
+                        <i class="fas fa-arrow-left"></i>
+                        Back to Analytics
+                    </button>
+                    <button class="btn btn-success" onclick="saveSettings()">
+                        <i class="fas fa-save"></i>
+                        Save Settings
+                    </button>
+                </div>
+            </div>
+
+            <!-- Settings Sections -->
+            <div class="settings-grid">
+                <!-- Stacking Arm Settings -->
+                <div class="settings-section">
+                    <div class="section-header">
+                        <div class="section-icon">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <h3>Stacking Arm</h3>
+                        <button class="btn btn-default" onclick="stackingArmDefault()">
+                            <i class="fas fa-undo"></i>
+                            Default
+                        </button>
+                    </div>
+                    <div class="settings-form">
+                        <div class="form-group">
+                            <label>Z Limit setup (Bottom according to the item and conveyor)</label>
+                            <div class="value-control">
+                                <button class="control-btn minus" onclick="stackingZLimitMinus()">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <div class="value-display">
+                                    <span id="stackingZLimit">0.0</span>
+                                </div>
+                                <button class="control-btn plus" onclick="stackingZLimitPlus()">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>X position on the knife edge conveyor</label>
+                            <div class="value-control">
+                                <button class="control-btn minus" onclick="stackingXPositionMinus()">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <div class="value-display">
+                                    <span id="stackingXPosition">0.0</span>
+                                </div>
+                                <button class="control-btn plus" onclick="stackingXPositionPlus()">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>X position on stacking conveyor</label>
+                            <div class="value-control">
+                                <button class="control-btn minus" onclick="stackingXStackingMinus()">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <div class="value-display">
+                                    <span id="stackingXStacking">0.0</span>
+                                </div>
+                                <button class="control-btn plus" onclick="stackingXStackingPlus()">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Speed X</label>
+                            <div class="value-control">
+                                <button class="control-btn minus" onclick="stackingSpeedXMinus()">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <div class="value-display">
+                                    <span id="stackingSpeedX">0.0</span>
+                                </div>
+                                <button class="control-btn plus" onclick="stackingSpeedXPlus()">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Speed Z</label>
+                            <div class="value-control">
+                                <button class="control-btn minus" onclick="stackingSpeedZMinus()">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <div class="value-display">
+                                    <span id="stackingSpeedZ">0.0</span>
+                                </div>
+                                <button class="control-btn plus" onclick="stackingSpeedZPlus()">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Conveyor (Stacking) end checking gap change</label>
+                            <div class="value-control">
+                                <button class="control-btn minus" onclick="stackingGapChangeMinus()">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <div class="value-display">
+                                    <span id="stackingGapChange">0.0</span>
+                                </div>
+                                <button class="control-btn plus" onclick="stackingGapChangePlus()">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Operating Items</label>
+                            <div class="select-control">
+                                <select id="stackingOperatingItems" class="operating-items-select" onchange="stackingOperatingItemsChange(this.value)">
+                                    <option value="4">4 Items</option>
+                                    <option value="6">6 Items</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- High Speed Arm Settings -->
+                <div class="settings-section">
+                    <div class="section-header">
+                        <div class="section-icon">
+                            <i class="fas fa-tachometer-alt"></i>
+                        </div>
+                        <h3>High Speed Arm</h3>
+                        <button class="btn btn-default" onclick="highSpeedArmDefault()">
+                            <i class="fas fa-undo"></i>
+                            Default
+                        </button>
+                    </div>
+                    <div class="settings-form">
+                        <div class="form-group">
+                            <label>Z position (according to the tub and lid)</label>
+                            <div class="value-control">
+                                <button class="control-btn minus" onclick="highSpeedZPositionMinus()">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <div class="value-display">
+                                    <span id="highSpeedZPosition">0.0</span>
+                                </div>
+                                <button class="control-btn plus" onclick="highSpeedZPositionPlus()">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Y position on the bed</label>
+                            <div class="value-control">
+                                <button class="control-btn minus" onclick="highSpeedYBedMinus()">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <div class="value-display">
+                                    <span id="highSpeedYBed">0.0</span>
+                                </div>
+                                <button class="control-btn plus" onclick="highSpeedYBedPlus()">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Y position on the edge conveyor</label>
+                            <div class="value-control">
+                                <button class="control-btn minus" onclick="highSpeedYEdgeMinus()">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <div class="value-display">
+                                    <span id="highSpeedYEdge">0.0</span>
+                                </div>
+                                <button class="control-btn plus" onclick="highSpeedYEdgePlus()">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Moving speed</label>
+                            <div class="value-control">
+                                <button class="control-btn minus" onclick="highSpeedMovingMinus()">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <div class="value-display">
+                                    <span id="highSpeedMoving">0.0</span>
+                                </div>
+                                <button class="control-btn plus" onclick="highSpeedMovingPlus()">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Operating Items</label>
+                            <div class="select-control">
+                                <select id="highSpeedOperatingItems" class="operating-items-select" onchange="highSpeedOperatingItemsChange(this.value)">
+                                    <option value="4">4 Items</option>
+                                    <option value="6">6 Items</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Moving Bed Settings -->
+                <div class="settings-section">
+                    <div class="section-header">
+                        <div class="section-icon">
+                            <i class="fas fa-conveyor-belt"></i>
+                        </div>
+                        <h3>Moving Bed</h3>
+                        <button class="btn btn-default" onclick="movingBedDefault()">
+                            <i class="fas fa-undo"></i>
+                            Default
+                        </button>
+                    </div>
+                    <div class="settings-form">
+                        
+                        <div class="form-group">
+                            <label>Y taking position</label>
+                            <div class="value-control">
+                                <button class="control-btn minus" onclick="movingBedYTakingMinus()">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <div class="value-display">
+                                    <span id="movingBedYTaking">0.0</span>
+                                </div>
+                                <button class="control-btn plus" onclick="movingBedYTakingPlus()">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Y take out position</label>
+                            <div class="value-control">
+                                <button class="control-btn minus" onclick="movingBedYTakeOutMinus()">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <div class="value-display">
+                                    <span id="movingBedYTakeOut">0.0</span>
+                                </div>
+                                <button class="control-btn plus" onclick="movingBedYTakeOutPlus()">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Speed</label>
+                            <div class="value-control">
+                                <button class="control-btn minus" onclick="movingBedSpeedMinus()">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <div class="value-display">
+                                    <span id="movingBedSpeed">0.0</span>
+                                </div>
+                                <button class="control-btn plus" onclick="movingBedSpeedPlus()">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                            <div class="form-group">
+                            <label>Operating Items</label>
+                            <div class="select-control">
+                                <select id="movingBedOperatingItems" class="operating-items-select" onchange="movingBedOperatingItemsChange(this.value)">
+                                    <option value="4">4 Items</option>
+                                    <option value="6">6 Items</option>
+                                </select>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Bottom Navigation -->
+        <nav class="bottom-nav">
+            <a href="/" class="nav-tab">
+                <i class="fas fa-home"></i>
+                <span>Home</span>
+            </a>
+            <a href="settings" class="nav-tab">
+                <i class="fas fa-cog"></i>
+                <span>Settings</span>
+            </a>
+            <a href="analytics" class="nav-tab">
+                <i class="fas fa-chart-bar"></i>
+                <span>Analytics</span>
+            </a>
+            <button class="nav-tab">
+                <i class="fas fa-tools"></i>
+                <span>Maintenance</span>
+            </button>
+            <button class="nav-tab" onclick="toggleKeyboard()">
+                <i class="fas fa-keyboard"></i>
+                <span>Keyboard</span>
+            </button>
+        </nav>
+    </div>
+
+    <script src="static/item-settings.js"></script>
+</body>
+</html>
