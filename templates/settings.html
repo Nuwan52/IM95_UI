@@ -670,7 +670,7 @@
 
 
                     <br><br>
-                     <h3>Presure Zone</h3>
+                    <h3>Presure Zone</h3>
                     <div class="camera-grid">
                         <div class="camera-item">
                             <div class="camera-header">
@@ -873,6 +873,19 @@
     <script src="static/servo-controls.js"></script>
     <script>
         var socket = io();
+        window.onload = onPageLoad;
+
+        socket.on('IO_DATA', function (data) {
+            console.log(data.message)
+
+        });
+
+        function onPageLoad(){
+            console.log("page loaded");
+            socket.emit('IO_DATA_REQUEST');
+
+        }
+
 
         function toggleTheme() {
             const body = document.body;

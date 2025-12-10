@@ -46,6 +46,13 @@ def handle_button_click(button):
     print(button)  # Do your Python function here
 
 
+
+@socketio.on('IO_DATA_REQUEST')
+def io_data_request():
+    sending_Ethernet_command("A")
+    print("Requesting io Data")  
+
+
 @socketio.on('INIT')
 def handle_init():
     print("Initiating the system!")
@@ -79,11 +86,19 @@ def DesableMotors():
             break
 
 
+def sending_Ethernet_command(message):
+    try:
+        sock.sendto(message.encode('utf-8'), (UDP_IP, UDP_PORT))
+    except Exception as e:
+        print(f"[UDP Send Error] {e}")
+
+
+
 def ethernet_thread():
     """Example background thread function."""
     while True:
         data, addr = sock.recvfrom(1024)
-        print("[Arduino] Received:", data.decode())
+        Controller_data_loader(data.decode())
         
         time.sleep(0.1)
 
@@ -118,6 +133,21 @@ def ReadMotorPos():
 def ReadMotorVoltage():
     pass
 
+
+def Controller_data_loader(data):
+    if(data == 'HS00'):
+        print("Heart Beat Tiggering")
+    if(data[:2] == 'RI'):
+        code = data[2:]
+        IO_Input_Encorder(code)
+        
+  
+
+
+def IO_Input_Encorder(code):
+    data_io = bin(int(code))
+    socketio.emit('IO_DATA', {"message": data_io})
+    print(data_io)
     
 
 if __name__ == "__main__":
@@ -135,6 +165,3 @@ if __name__ == "__main__":
     mc.close()
 
    
-
-
-# This is github test
