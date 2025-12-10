@@ -7,8 +7,8 @@ socket.on('INIT_BACKEND', function (data) {
 
     if (initBtn.classList.contains('active')) {
         initBtn.classList.remove('active');
-        initBtn.innerHTML = '<i class="fas fa-check"></i><span>Initialized</span>';
-        updateMachineStatus('initialized');
+        initBtn.innerHTML = '<i class="fas fa-check"></i><span>'+ data.message + '</span>';
+        updateMachineStatus(data.message);
     }
 });
 
