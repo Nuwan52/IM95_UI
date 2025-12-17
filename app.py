@@ -19,7 +19,9 @@ sock_02 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 sock_02.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 sock_02.bind(("0.0.0.0", 7920))
 
-readingFlag = False
+readingFlag = True
+
+
 
 
 
@@ -56,6 +58,7 @@ def io_data_request():
 @socketio.on('INIT')
 def handle_init():
     print("Initiating the system!")
+    Motorstatus()
     InitMotors()
 
     try:
@@ -64,6 +67,15 @@ def handle_init():
     except Exception as e:
         print(f"[UDP Send Error] {e}")
 
+def Motorstatus():
+    for n in range(1,7):
+        try:   
+            data = mc.read_driver_status(axis=n)
+            time.sleep(0.01)
+            print("Axis " , n , data.registers)
+        except:
+            print("Something Wrong with Axis " ,n)
+            break
 
 def InitMotors():
     for n in range(1 , 7):
@@ -92,7 +104,15 @@ def sending_Ethernet_command(message):
     except Exception as e:
         print(f"[UDP Send Error] {e}")
 
-
+def ReadMotorAlams():
+    for n in range(1,7):
+        try:   
+            data = mc.read_current_alarm(axis=n)
+            time.sleep(0.01)
+            print("Axis " , n , data.registers)
+        except:
+            print("Something Wrong with Axis " ,n)
+            break
 
 def ethernet_thread():
     """Example background thread function."""
@@ -115,8 +135,10 @@ def ethernet_thread_AI():
 def ReadMotors():
     while True:
         if readingFlag:
-            ReadMotorPos()
-            ReadMotorVoltage()
+            # ReadMotorPos()
+            # ReadMotorVoltage()
+             Motorstatus()
+            # ReadMotorAlams()
         time.sleep(2)
 
 def ReadMotorPos():
@@ -147,7 +169,7 @@ def Controller_data_loader(data):
 def IO_Input_Encorder(code):
     data_io = bin(int(code))
     socketio.emit('IO_DATA', {"message": data_io})
-    print(data_io)
+    # print(data_io)
     
 
 if __name__ == "__main__":

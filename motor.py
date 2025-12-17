@@ -29,6 +29,7 @@ class MotorController:
     def read_current_alarm(self, axis):
         rr = self.client.read_holding_registers(device_id=axis, address=0x0B03, count=1)
         print(rr.registers)
+        return rr
 
     def read_bus_voltage(self, axis):
         rr = self.client.read_holding_registers(device_id=axis, address=0x0B0A, count=1)
@@ -45,6 +46,7 @@ class MotorController:
     def read_driver_status(self, axis):
         rr = self.client.read_holding_registers(device_id=axis, address=0x0B05, count=1)
         print(bin(rr.registers[0]))
+        return rr
 
     # ============================
     #      MOTION CONTROL
