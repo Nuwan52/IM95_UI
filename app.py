@@ -3,6 +3,7 @@ from flask_socketio import SocketIO, emit
 import time
 import socket
 from motor import MotorController
+import pandas as pd 
 
 app = Flask(__name__)
 socketio = SocketIO(app)
@@ -78,16 +79,32 @@ def Motorstatus():
             break
 
 def InitMotors():
-    for n in range(1 , 7):
-        status =mc.enable_motor(axis=n)
-        print("Enabling Axis " , n)
-        if(status == 0):
-            print("Something went wrong with Axis " , n)
-            break
-    if n == 6:
-        emit('INIT_BACKEND', {"message": "initialized"}, broadcast=True)
-    else:
-        emit('INIT_BACKEND', {"message": "stopped"}, broadcast=True)
+
+    # mc.MotorToqueSetting(axis=1  ,toque=20)
+    mc.MinSoftwareLimit(axis=1 , min= -1000000)
+
+    time.sleep(1)
+
+    mc.MaxSoftwareLimit(axis=1 , Max=1000000)
+
+    mc.clear_alarm(axis=1)
+    time.sleep(1)
+    status =mc.enable_motor(axis=1)
+    time.sleep(1)
+    mc.homing(axis=1)
+
+    
+    
+    # for n in range(1 , 7):
+    #     status =mc.enable_motor(axis=n)
+    #     print("Enabling Axis " , n)
+    #     if(status == 0):
+    #         print("Something went wrong with Axis " , n)
+    #         break
+    # if n == 6:
+    #     emit('INIT_BACKEND', {"message": "initialized"}, broadcast=True)
+    # else:
+    #     emit('INIT_BACKEND', {"message": "stopped"}, broadcast=True)
 
 def DesableMotors():
     for n in range(1 , 7):
@@ -137,8 +154,8 @@ def ReadMotors():
         if readingFlag:
             # ReadMotorPos()
             # ReadMotorVoltage()
-             Motorstatus()
-            # ReadMotorAlams()
+            Motorstatus()
+            ReadMotorAlams()
         time.sleep(2)
 
 def ReadMotorPos():
@@ -169,15 +186,23 @@ def Controller_data_loader(data):
 def IO_Input_Encorder(code):
     data_io = bin(int(code))
     socketio.emit('IO_DATA', {"message": data_io})
-    # print(data_io)
+    print(data_io)
     
 
 if __name__ == "__main__":
     # ✅ Start your background task properly
     mc = MotorController(port="COM1")
+
+    alarms = pd.read_csv('alarms.csv' ,sep=',')
+    print(alarms.head())
+
+
     socketio.start_background_task(ethernet_thread)
     socketio.start_background_task(ethernet_thread_AI)
     socketio.start_background_task(ReadMotors)
+
+   
+
     
 
 

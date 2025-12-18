@@ -52,6 +52,38 @@ class MotorController:
     #      MOTION CONTROL
     # ============================
 
+
+    def MinSoftwareLimit(self , axis , min):
+        min_high = (min >> 16) & 0xFFFF
+        min_low = min & 0xFFFF
+        registers = [
+            min_high,
+            min_low
+        ]
+        rr = self.client.write_registers(
+            address=0x6008,
+            values=registers,
+            device_id=axis
+        )
+        print(rr)
+        return rr
+    
+
+    def MaxSoftwareLimit(self , axis , Max):
+        Max_high = (Max >> 16) & 0xFFFF
+        Max_low = Max & 0xFFFF
+        registers = [
+            Max_high,
+            Max_low
+        ]
+        rr = self.client.write_registers(
+            address=0x6006,
+            values=registers,
+            device_id=axis
+        )
+        print(rr)
+        return rr
+
     def send_immediate_trigger(self, pos, velocity=4000, slave_id=1):
 
         mode = 0x0001
@@ -91,6 +123,10 @@ class MotorController:
     # ============================
     #     MOTOR ENABLE / DISABLE
     # ============================
+
+    def MotorToqueSetting(self, axis , toque):
+        return self.client.write_register(address=0x001B, value=toque, device_id=axis)
+        
 
     def enable_motor(self, axis):
         try:
