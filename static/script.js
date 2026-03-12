@@ -7,10 +7,79 @@ socket.on('INIT_BACKEND', function (data) {
 
     if (initBtn.classList.contains('active')) {
         initBtn.classList.remove('active');
-        initBtn.innerHTML = '<i class="fas fa-check"></i><span>'+ data.message + '</span>';
+        initBtn.innerHTML = '<i class="fas fa-check"></i><span>' + data.message + '</span>';
         updateMachineStatus(data.message);
     }
+    if (data.message == "stopped") {
+        initBtn.classList.add('error');
+        addAlert(
+            "Error",
+            "fas fa-check-circle",
+            "Initialization Failed",
+            new Date().toLocaleTimeString()
+        );
+    }
 });
+
+
+socket.on('ALARM', function (data) {
+    console.log(data.Error, data.Axis)
+    if (data.Error != 0) {
+        document.getElementById("machineStateText").textContent = "Axis :" + data.Axis + " has Alarm code  " + data.Error;
+        setMachineStateColor("error");
+        addAlert(
+                "Alarm",
+                "fas fa-check-circle",
+                "Axis :" + data.Axis + " has Alarm code  " + data.Error,
+                new Date().toLocaleTimeString()
+            );
+    } else {
+        document.getElementById("machineStateText").textContent = " Ready ";
+        setMachineStateColor("warning");
+
+
+    }
+
+
+
+});
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    
+    socket.emit('HOME_BUTTON' , 0);
+    console.log("Home page has been loaded")
+});
+
+
+
+function setMachineStateColor(state) {
+    const el = document.getElementById("machineStateText");
+
+    el.classList.remove("state-error", "state-warning", "state-running");
+    el.classList.add(`state-${state}`);
+}
+
+function addAlert(type, iconClass, title, time) {
+    const alertsList = document.getElementById("alertsList");
+
+    const alertDiv = document.createElement("div");
+    alertDiv.className = `alert alert-${type}`;
+
+    alertDiv.innerHTML = `
+        <div class="alert-icon">
+            <i class="${iconClass}"></i>
+        </div>
+        <div class="alert-content">
+            <div class="alert-title">${title}</div>
+            <div class="alert-time">${time}</div>
+        </div>
+    `;
+
+    alertsList.appendChild(alertDiv);
+}
+
+
 
 
 
@@ -53,6 +122,15 @@ function updateMachineStatus(status, description, icon) {
             statusIcon.className = 'fas fa-check-circle';
             statusTitle.textContent = 'Initialized';
             statusDescription.textContent = 'System ready for operation';
+            document.getElementById("machineStateText").textContent = " Ready ";
+            setMachineStateColor("warning");
+
+            addAlert(
+                "success",
+                "fas fa-check-circle",
+                "Initialization Succesfull",
+                new Date().toLocaleTimeString()
+            );
             break;
     }
 }
@@ -99,12 +177,14 @@ function toggleStartPause() {
         startBtn.classList.remove('running');
         startBtn.innerHTML = '<i class="fas fa-play"></i><span>Start</span>';
         updateMachineStatus('paused');
+        socket.emit('START_STOP' , 0);
         console.log('Machine paused');
     } else {
         // Change to Pause state
         startBtn.classList.add('running');
         startBtn.innerHTML = '<i class="fas fa-pause"></i><span>Pause</span>';
         updateMachineStatus('running');
+        socket.emit('START_STOP' , 1);
         console.log('Machine started');
     }
 }
@@ -132,7 +212,13 @@ function emergencyStop() {
 
         initBtn.classList.remove('active');
         initBtn.innerHTML = '<i class="fas fa-cog"></i><span>Initializing</span>';
-
+        socket.emit('ESTOP');
+        addAlert(
+                "Error",
+                "fas fa-check-circle",
+                "Emergency stop actuated",
+                new Date().toLocaleTimeString()
+        );
         console.log('Emergency stop activated');
     }
 }

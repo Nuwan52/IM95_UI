@@ -28,7 +28,6 @@ class MotorController:
 
     def read_current_alarm(self, axis):
         rr = self.client.read_holding_registers(device_id=axis, address=0x0B03, count=1)
-        print(rr.registers)
         return rr
 
     def read_bus_voltage(self, axis):
@@ -44,8 +43,9 @@ class MotorController:
         print(rr.registers)
 
     def read_driver_status(self, axis):
+        
         rr = self.client.read_holding_registers(device_id=axis, address=0x0B05, count=1)
-        print(bin(rr.registers[0]))
+        #print(bin(rr.registers[0]))
         return rr
 
     # ============================
@@ -116,9 +116,56 @@ class MotorController:
 
         if rr.isError():
             print(f"❌ Error writing immediate trigger: {rr}")
+            return 0
         else:
             print(f"✅ Trigger OK (Axis {slave_id})")
             time.sleep(0.01)
+            return 1
+
+
+
+
+
+
+    def send_immediate_trigger_relative(self, pos, velocity=4000, slave_id=1):
+
+        mode = 0x0041
+        acceleration = 60
+        deceleration = 60
+        delay = 0
+        trigger = 0x0010
+
+        pos_high = (pos >> 16) & 0xFFFF
+        pos_low = pos & 0xFFFF
+
+        registers = [
+            mode,
+            pos_high,
+            pos_low,
+            velocity,
+            acceleration,
+            deceleration,
+            delay,
+            trigger
+        ]
+
+        print(f"\n=== Sending Trigger to Axis {slave_id} ===")
+
+        rr = self.client.write_registers(
+            address=0x6200,
+            values=registers,
+            device_id=slave_id
+        )
+
+        if rr.isError():
+            print(f"❌ Error writing immediate trigger: {rr}")
+        else:
+            print(f"✅ Trigger OK (Axis {slave_id})")
+            time.sleep(0.01)
+
+
+
+
 
     # ============================
     #     MOTOR ENABLE / DISABLE
@@ -126,6 +173,9 @@ class MotorController:
 
     def MotorToqueSetting(self, axis , toque):
         return self.client.write_register(address=0x001B, value=toque, device_id=axis)
+    
+    def JogVelocity(self, axis , velocity):
+        return self.client.write_register(address=0X6027, value=velocity, device_id=axis)
         
 
     def enable_motor(self, axis):
@@ -157,9 +207,16 @@ class MotorController:
     #          HOMING
     # ============================
 
-    def homing(self, axis):
+    def homing(self, axis , direction = 1):
+        if direction == 1: 
+         DM = 4
+        else:
+            DM = 5
+
+       
+
         sequence = [
-            (0X600A, 0x0004),
+            (0X600A, DM),
             (0X600F, 0x0064),
             (0X6010, 0x001E),
             (0X6002, 0x0020)
@@ -169,10 +226,11 @@ class MotorController:
             time.sleep(0.01)
             print(rr)
 
-    def homing_all(self, axes=[1, 2, 3, 4]):
+    def homing_all(self, axes=[1, 3, 5 , 6, 7]):
         for axis in axes:
             print(f"\n=== Homing Axis {axis} ===")
-            self.homing(axis)
+            time.sleep(5)
+            self.homing(axis , direction=1)
 
     def close(self):
         self.client.close()

@@ -1,4 +1,10 @@
 /* CSS Variables for Dark Theme */
+
+
+.state-error { color: red; }
+.state-warning { color: orange; }
+.state-running { color: green; }
+
 .dark-theme {
     --bg-primary: #1a1d29;
     --bg-secondary: #252836;
@@ -433,6 +439,10 @@ body {
 
 .initializing-btn.active {
     background: var(--accent-orange);
+    animation: pulse 2s infinite;
+}
+.initializing-btn.error {
+    background: var(--accent-red);
     animation: pulse 2s infinite;
 }
 

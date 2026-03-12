@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Machine Control System - Settings</title>
     <link rel="stylesheet" href="static/settings.css">
-    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+    <script src="/static/socket.io.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 
@@ -23,8 +23,7 @@
 
             <div class="header-center">
                 <div class="fullscreen-hint">
-                    <span>To exit full screen, press and hold</span>
-                    <kbd>Esc</kbd>
+                    <span>Machine State :</span>
                 </div>
             </div>
 
@@ -225,7 +224,7 @@
                                 <span class="solenoid-label">IO 1</span>
                                 <div class="status-indicator red"></div>
                             </div>
-                            <button class="toggle-btn off 01" onclick="toggleSolenoid(this)">
+                            <button class="toggle-btn off 01_input">
                                 <i class="fas fa-power-off"></i>
                                 <span>OFF</span>
                             </button>
@@ -236,7 +235,7 @@
                                 <span class="solenoid-label">IO 2</span>
                                 <div class="status-indicator red"></div>
                             </div>
-                            <button class="toggle-btn off 02" onclick="toggleSolenoid(this)">
+                            <button class="toggle-btn off 02_input">
                                 <i class="fas fa-power-off"></i>
                                 <span>OFF</span>
                             </button>
@@ -247,7 +246,7 @@
                                 <span class="solenoid-label">IO 3</span>
                                 <div class="status-indicator red"></div>
                             </div>
-                            <button class="toggle-btn off 03" onclick="toggleSolenoid(this)">
+                            <button class="toggle-btn off 03_input">
                                 <i class="fas fa-power-off"></i>
                                 <span>OFF</span>
                             </button>
@@ -258,7 +257,7 @@
                                 <span class="solenoid-label">IO 4</span>
                                 <div class="status-indicator red"></div>
                             </div>
-                            <button class="toggle-btn off 04" onclick="toggleSolenoid(this)">
+                            <button class="toggle-btn off 04_input">
                                 <i class="fas fa-power-off"></i>
                                 <span>OFF</span>
                             </button>
@@ -269,7 +268,7 @@
                                 <span class="solenoid-label">IO 5</span>
                                 <div class="status-indicator red"></div>
                             </div>
-                            <button class="toggle-btn off 05" onclick="toggleSolenoid(this)">
+                            <button class="toggle-btn off 05_input">
                                 <i class="fas fa-power-off"></i>
                                 <span>OFF</span>
                             </button>
@@ -280,7 +279,7 @@
                                 <span class="solenoid-label">IO 6</span>
                                 <div class="status-indicator red"></div>
                             </div>
-                            <button class="toggle-btn off 06" onclick="toggleSolenoid(this)">
+                            <button class="toggle-btn off 06_input">
                                 <i class="fas fa-power-off"></i>
                                 <span>OFF</span>
                             </button>
@@ -291,7 +290,7 @@
                                 <span class="solenoid-label">IO 7</span>
                                 <div class="status-indicator red"></div>
                             </div>
-                            <button class="toggle-btn off 07" onclick="toggleSolenoid(this)">
+                            <button class="toggle-btn off 07_input">
                                 <i class="fas fa-power-off"></i>
                                 <span>OFF</span>
                             </button>
@@ -302,7 +301,7 @@
                                 <span class="solenoid-label">IO 8</span>
                                 <div class="status-indicator red"></div>
                             </div>
-                            <button class="toggle-btn off 08" onclick="toggleSolenoid(this)">
+                            <button class="toggle-btn off 08_input">
                                 <i class="fas fa-power-off"></i>
                                 <span>OFF</span>
                             </button>
@@ -313,7 +312,7 @@
                                 <span class="solenoid-label">IO 9</span>
                                 <div class="status-indicator red"></div>
                             </div>
-                            <button class="toggle-btn off 09" onclick="toggleSolenoid(this)">
+                            <button class="toggle-btn off 09_input">
                                 <i class="fas fa-power-off"></i>
                                 <span>OFF</span>
                             </button>
@@ -324,7 +323,7 @@
                                 <span class="solenoid-label">IO 10</span>
                                 <div class="status-indicator red"></div>
                             </div>
-                            <button class="toggle-btn off 10" onclick="toggleSolenoid(this)">
+                            <button class="toggle-btn off 10_input">
                                 <i class="fas fa-power-off"></i>
                                 <span>OFF</span>
                             </button>
@@ -335,7 +334,7 @@
                                 <span class="solenoid-label">IO 11</span>
                                 <div class="status-indicator red"></div>
                             </div>
-                            <button class="toggle-btn off 11" onclick="toggleSolenoid(this)">
+                            <button class="toggle-btn off 11_input">
                                 <i class="fas fa-power-off"></i>
                                 <span>OFF</span>
                             </button>
@@ -346,7 +345,7 @@
                                 <span class="solenoid-label">IO 12</span>
                                 <div class="status-indicator red"></div>
                             </div>
-                            <button class="toggle-btn off 12" onclick="toggleSolenoid(this)">
+                            <button class="toggle-btn off 12_input">
                                 <i class="fas fa-power-off"></i>
                                 <span>OFF</span>
                             </button>
@@ -357,7 +356,7 @@
                                 <span class="solenoid-label">IO 13</span>
                                 <div class="status-indicator red"></div>
                             </div>
-                            <button class="toggle-btn off 13" onclick="toggleSolenoid(this)">
+                            <button class="toggle-btn off 13_input">
                                 <i class="fas fa-power-off"></i>
                                 <span>OFF</span>
                             </button>
@@ -368,7 +367,7 @@
                                 <span class="solenoid-label">IO 14</span>
                                 <div class="status-indicator red"></div>
                             </div>
-                            <button class="toggle-btn off 14" onclick="toggleSolenoid(this)">
+                            <button class="toggle-btn off 14_input">
                                 <i class="fas fa-power-off"></i>
                                 <span>OFF</span>
                             </button>
@@ -378,11 +377,66 @@
                                 <span class="solenoid-label">IO 15</span>
                                 <div class="status-indicator red"></div>
                             </div>
-                            <button class="toggle-btn off 15" onclick="toggleSolenoid(this)">
+                            <button class="toggle-btn off 15_input">
                                 <i class="fas fa-power-off"></i>
                                 <span>OFF</span>
                             </button>
                         </div>
+
+
+                        <div class="solenoid-item">
+                            <div class="solenoid-header">
+                                <span class="solenoid-label">IO 16</span>
+                                <div class="status-indicator red"></div>
+                            </div>
+                            <button class="toggle-btn off 16_input">
+                                <i class="fas fa-power-off"></i>
+                                <span>OFF</span>
+                            </button>
+                        </div>
+
+
+
+                        <div class="solenoid-item">
+                            <div class="solenoid-header">
+                                <span class="solenoid-label">IO 17</span>
+                                <div class="status-indicator red"></div>
+                            </div>
+                            <button class="toggle-btn off 17_input">
+                                <i class="fas fa-power-off"></i>
+                                <span>OFF</span>
+                            </button>
+                        </div>
+
+
+
+                        <div class="solenoid-item">
+                            <div class="solenoid-header">
+                                <span class="solenoid-label">IO 18</span>
+                                <div class="status-indicator red"></div>
+                            </div>
+                            <button class="toggle-btn off 18_input">
+                                <i class="fas fa-power-off"></i>
+                                <span>OFF</span>
+                            </button>
+                        </div>
+
+
+                        <div class="solenoid-item">
+                            <div class="solenoid-header">
+                                <span class="solenoid-label">IO 19</span>
+                                <div class="status-indicator red"></div>
+                            </div>
+                            <button class="toggle-btn off 19_input">
+                                <i class="fas fa-power-off"></i>
+                                <span>OFF</span>
+                            </button>
+                        </div>
+
+
+
+
+
                     </div>
                 </div>
 
@@ -876,14 +930,15 @@
         window.onload = onPageLoad;
 
         socket.on('IO_DATA', function (data) {
-            console.log(data.message)
+            console.log(data.message);
+            InputVisualizer(data.message);
 
         });
 
-        function onPageLoad(){
+        function onPageLoad() {
             console.log("page loaded");
             socket.emit('IO_DATA_REQUEST');
-            
+
 
         }
 
@@ -919,6 +974,584 @@
                 body.classList.remove('light-theme');
                 body.classList.add('dark-theme');
                 themeToggle.className = 'fas fa-moon';
+            }
+        }
+
+        function normalizeBinary(data) {
+            return data.startsWith('0b') ? data.slice(2) : data;
+        }
+
+        function toFixedBinary(data, width) {
+            const binary = data.toString().startsWith('0b')
+                ? data.slice(2)
+                : Number(data).toString(2);
+
+            return binary.padStart(width, '0');
+        }
+
+
+        function InputVisualizer(data) {
+
+            new_data = toFixedBinary(data, 19);
+            console.log(new_data);
+
+
+            if (new_data[18] == 1) {
+
+                const button = document.getElementsByClassName('01_input')[0];
+                button.classList.remove('off');
+                button.classList.add('on');
+
+                const statusIndicator = button
+                    .closest('.solenoid-item')
+                    .querySelector('.status-indicator');
+
+                statusIndicator.classList.remove('red');
+                statusIndicator.classList.add('green');
+            } else {
+
+                const button = document.getElementsByClassName('01_input')[0];
+                button.classList.remove('on');
+                button.classList.add('off');
+
+                const statusIndicator = button
+                    .closest('.solenoid-item')
+                    .querySelector('.status-indicator');
+
+                statusIndicator.classList.remove('green');
+                statusIndicator.classList.add('red');
+
+            }
+
+
+
+
+            if (new_data[17] == 1) {
+
+                const button = document.getElementsByClassName('02_input')[0];
+                button.classList.remove('off');
+                button.classList.add('on');
+
+                const statusIndicator = button
+                    .closest('.solenoid-item')
+                    .querySelector('.status-indicator');
+
+                statusIndicator.classList.remove('red');
+                statusIndicator.classList.add('green');
+            } else {
+
+                const button = document.getElementsByClassName('02_input')[0];
+                button.classList.remove('on');
+                button.classList.add('off');
+
+                const statusIndicator = button
+                    .closest('.solenoid-item')
+                    .querySelector('.status-indicator');
+
+                statusIndicator.classList.remove('green');
+                statusIndicator.classList.add('red');
+
+            }
+
+
+            if (new_data[16] == 1) {
+
+                const button = document.getElementsByClassName('03_input')[0];
+                button.classList.remove('off');
+                button.classList.add('on');
+
+                const statusIndicator = button
+                    .closest('.solenoid-item')
+                    .querySelector('.status-indicator');
+
+                statusIndicator.classList.remove('red');
+                statusIndicator.classList.add('green');
+            } else {
+
+                const button = document.getElementsByClassName('03_input')[0];
+                button.classList.remove('on');
+                button.classList.add('off');
+
+                const statusIndicator = button
+                    .closest('.solenoid-item')
+                    .querySelector('.status-indicator');
+
+                statusIndicator.classList.remove('green');
+                statusIndicator.classList.add('red');
+
+            }
+
+            if (new_data[15] == 1) {
+
+                const button = document.getElementsByClassName('04_input')[0];
+                button.classList.remove('off');
+                button.classList.add('on');
+
+                const statusIndicator = button
+                    .closest('.solenoid-item')
+                    .querySelector('.status-indicator');
+
+                statusIndicator.classList.remove('red');
+                statusIndicator.classList.add('green');
+            } else {
+
+                const button = document.getElementsByClassName('04_input')[0];
+                button.classList.remove('on');
+                button.classList.add('off');
+
+                const statusIndicator = button
+                    .closest('.solenoid-item')
+                    .querySelector('.status-indicator');
+
+                statusIndicator.classList.remove('green');
+                statusIndicator.classList.add('red');
+
+            }
+
+            if (new_data[14] == 1) {
+
+                const button = document.getElementsByClassName('05_input')[0];
+                button.classList.remove('off');
+                button.classList.add('on');
+
+                const statusIndicator = button
+                    .closest('.solenoid-item')
+                    .querySelector('.status-indicator');
+
+                statusIndicator.classList.remove('red');
+                statusIndicator.classList.add('green');
+            } else {
+
+                const button = document.getElementsByClassName('05_input')[0];
+                button.classList.remove('on');
+                button.classList.add('off');
+
+                const statusIndicator = button
+                    .closest('.solenoid-item')
+                    .querySelector('.status-indicator');
+
+                statusIndicator.classList.remove('green');
+                statusIndicator.classList.add('red');
+
+            }
+
+
+
+
+            if (new_data[13] == 1) {
+
+                const button = document.getElementsByClassName('06_input')[0];
+                button.classList.remove('off');
+                button.classList.add('on');
+
+                const statusIndicator = button
+                    .closest('.solenoid-item')
+                    .querySelector('.status-indicator');
+
+                statusIndicator.classList.remove('red');
+                statusIndicator.classList.add('green');
+            } else {
+
+                const button = document.getElementsByClassName('06_input')[0];
+                button.classList.remove('on');
+                button.classList.add('off');
+
+                const statusIndicator = button
+                    .closest('.solenoid-item')
+                    .querySelector('.status-indicator');
+
+                statusIndicator.classList.remove('green');
+                statusIndicator.classList.add('red');
+
+            }
+
+
+
+            if (new_data[12] == 1) {
+
+                const button = document.getElementsByClassName('07_input')[0];
+                button.classList.remove('off');
+                button.classList.add('on');
+
+                const statusIndicator = button
+                    .closest('.solenoid-item')
+                    .querySelector('.status-indicator');
+
+                statusIndicator.classList.remove('red');
+                statusIndicator.classList.add('green');
+            } else {
+
+                const button = document.getElementsByClassName('07_input')[0];
+                button.classList.remove('on');
+                button.classList.add('off');
+
+                const statusIndicator = button
+                    .closest('.solenoid-item')
+                    .querySelector('.status-indicator');
+
+                statusIndicator.classList.remove('green');
+                statusIndicator.classList.add('red');
+
+            }
+
+
+
+
+            if (new_data[11] == 1) {
+
+                const button = document.getElementsByClassName('08_input')[0];
+                button.classList.remove('off');
+                button.classList.add('on');
+
+                const statusIndicator = button
+                    .closest('.solenoid-item')
+                    .querySelector('.status-indicator');
+
+                statusIndicator.classList.remove('red');
+                statusIndicator.classList.add('green');
+            } else {
+
+                const button = document.getElementsByClassName('08_input')[0];
+                button.classList.remove('on');
+                button.classList.add('off');
+
+                const statusIndicator = button
+                    .closest('.solenoid-item')
+                    .querySelector('.status-indicator');
+
+                statusIndicator.classList.remove('green');
+                statusIndicator.classList.add('red');
+
+            }
+
+
+
+
+
+
+            if (new_data[10] == 1) {
+
+                const button = document.getElementsByClassName('09_input')[0];
+                button.classList.remove('off');
+                button.classList.add('on');
+
+                const statusIndicator = button
+                    .closest('.solenoid-item')
+                    .querySelector('.status-indicator');
+
+                statusIndicator.classList.remove('red');
+                statusIndicator.classList.add('green');
+            } else {
+
+                const button = document.getElementsByClassName('09_input')[0];
+                button.classList.remove('on');
+                button.classList.add('off');
+
+                const statusIndicator = button
+                    .closest('.solenoid-item')
+                    .querySelector('.status-indicator');
+
+                statusIndicator.classList.remove('green');
+                statusIndicator.classList.add('red');
+
+            }
+
+
+
+
+            if (new_data[9] == 1) {
+
+                const button = document.getElementsByClassName('10_input')[0];
+                button.classList.remove('off');
+                button.classList.add('on');
+
+                const statusIndicator = button
+                    .closest('.solenoid-item')
+                    .querySelector('.status-indicator');
+
+                statusIndicator.classList.remove('red');
+                statusIndicator.classList.add('green');
+            } else {
+
+                const button = document.getElementsByClassName('10_input')[0];
+                button.classList.remove('on');
+                button.classList.add('off');
+
+                const statusIndicator = button
+                    .closest('.solenoid-item')
+                    .querySelector('.status-indicator');
+
+                statusIndicator.classList.remove('green');
+                statusIndicator.classList.add('red');
+
+            }
+
+
+
+
+
+            if (new_data[8] == 1) {
+
+                const button = document.getElementsByClassName('11_input')[0];
+                button.classList.remove('off');
+                button.classList.add('on');
+
+                const statusIndicator = button
+                    .closest('.solenoid-item')
+                    .querySelector('.status-indicator');
+
+                statusIndicator.classList.remove('red');
+                statusIndicator.classList.add('green');
+            } else {
+
+                const button = document.getElementsByClassName('11_input')[0];
+                button.classList.remove('on');
+                button.classList.add('off');
+
+                const statusIndicator = button
+                    .closest('.solenoid-item')
+                    .querySelector('.status-indicator');
+
+                statusIndicator.classList.remove('green');
+                statusIndicator.classList.add('red');
+
+            }
+
+
+            if (new_data[7] == 1) {
+
+                const button = document.getElementsByClassName('12_input')[0];
+                button.classList.remove('off');
+                button.classList.add('on');
+
+                const statusIndicator = button
+                    .closest('.solenoid-item')
+                    .querySelector('.status-indicator');
+
+                statusIndicator.classList.remove('red');
+                statusIndicator.classList.add('green');
+            } else {
+
+                const button = document.getElementsByClassName('12_input')[0];
+                button.classList.remove('on');
+                button.classList.add('off');
+
+                const statusIndicator = button
+                    .closest('.solenoid-item')
+                    .querySelector('.status-indicator');
+
+                statusIndicator.classList.remove('green');
+                statusIndicator.classList.add('red');
+
+            }
+
+
+
+
+            if (new_data[6] == 1) {
+
+                const button = document.getElementsByClassName('13_input')[0];
+                button.classList.remove('off');
+                button.classList.add('on');
+
+                const statusIndicator = button
+                    .closest('.solenoid-item')
+                    .querySelector('.status-indicator');
+
+                statusIndicator.classList.remove('red');
+                statusIndicator.classList.add('green');
+            } else {
+
+                const button = document.getElementsByClassName('13_input')[0];
+                button.classList.remove('on');
+                button.classList.add('off');
+
+                const statusIndicator = button
+                    .closest('.solenoid-item')
+                    .querySelector('.status-indicator');
+
+                statusIndicator.classList.remove('green');
+                statusIndicator.classList.add('red');
+
+            }
+
+
+
+
+            if (new_data[5] == 1) {
+
+                const button = document.getElementsByClassName('14_input')[0];
+                button.classList.remove('off');
+                button.classList.add('on');
+
+                const statusIndicator = button
+                    .closest('.solenoid-item')
+                    .querySelector('.status-indicator');
+
+                statusIndicator.classList.remove('red');
+                statusIndicator.classList.add('green');
+            } else {
+
+                const button = document.getElementsByClassName('14_input')[0];
+                button.classList.remove('on');
+                button.classList.add('off');
+
+                const statusIndicator = button
+                    .closest('.solenoid-item')
+                    .querySelector('.status-indicator');
+
+                statusIndicator.classList.remove('green');
+                statusIndicator.classList.add('red');
+
+            }
+
+
+
+
+            if (new_data[4] == 1) {
+
+                const button = document.getElementsByClassName('15_input')[0];
+                button.classList.remove('off');
+                button.classList.add('on');
+
+                const statusIndicator = button
+                    .closest('.solenoid-item')
+                    .querySelector('.status-indicator');
+
+                statusIndicator.classList.remove('red');
+                statusIndicator.classList.add('green');
+            } else {
+
+                const button = document.getElementsByClassName('15_input')[0];
+                button.classList.remove('on');
+                button.classList.add('off');
+
+                const statusIndicator = button
+                    .closest('.solenoid-item')
+                    .querySelector('.status-indicator');
+
+                statusIndicator.classList.remove('green');
+                statusIndicator.classList.add('red');
+
+            }
+
+
+
+
+             if (new_data[3] == 1) {
+
+                const button = document.getElementsByClassName('16_input')[0];
+                button.classList.remove('off');
+                button.classList.add('on');
+
+                const statusIndicator = button
+                    .closest('.solenoid-item')
+                    .querySelector('.status-indicator');
+
+                statusIndicator.classList.remove('red');
+                statusIndicator.classList.add('green');
+            } else {
+
+                const button = document.getElementsByClassName('16_input')[0];
+                button.classList.remove('on');
+                button.classList.add('off');
+
+                const statusIndicator = button
+                    .closest('.solenoid-item')
+                    .querySelector('.status-indicator');
+
+                statusIndicator.classList.remove('green');
+                statusIndicator.classList.add('red');
+
+            }
+
+
+             if (new_data[2] == 1) {
+
+                const button = document.getElementsByClassName('17_input')[0];
+                button.classList.remove('off');
+                button.classList.add('on');
+
+                const statusIndicator = button
+                    .closest('.solenoid-item')
+                    .querySelector('.status-indicator');
+
+                statusIndicator.classList.remove('red');
+                statusIndicator.classList.add('green');
+            } else {
+
+                const button = document.getElementsByClassName('17_input')[0];
+                button.classList.remove('on');
+                button.classList.add('off');
+
+                const statusIndicator = button
+                    .closest('.solenoid-item')
+                    .querySelector('.status-indicator');
+
+                statusIndicator.classList.remove('green');
+                statusIndicator.classList.add('red');
+
+            }
+
+
+
+
+             if (new_data[1] == 1) {
+
+                const button = document.getElementsByClassName('18_input')[0];
+                button.classList.remove('off');
+                button.classList.add('on');
+
+                const statusIndicator = button
+                    .closest('.solenoid-item')
+                    .querySelector('.status-indicator');
+
+                statusIndicator.classList.remove('red');
+                statusIndicator.classList.add('green');
+            } else {
+
+                const button = document.getElementsByClassName('18_input')[0];
+                button.classList.remove('on');
+                button.classList.add('off');
+
+                const statusIndicator = button
+                    .closest('.solenoid-item')
+                    .querySelector('.status-indicator');
+
+                statusIndicator.classList.remove('green');
+                statusIndicator.classList.add('red');
+
+            }
+
+
+
+
+
+             if (new_data[0] == 1) {
+
+                const button = document.getElementsByClassName('19_input')[0];
+                button.classList.remove('off');
+                button.classList.add('on');
+
+                const statusIndicator = button
+                    .closest('.solenoid-item')
+                    .querySelector('.status-indicator');
+
+                statusIndicator.classList.remove('red');
+                statusIndicator.classList.add('green');
+            } else {
+
+                const button = document.getElementsByClassName('19_input')[0];
+                button.classList.remove('on');
+                button.classList.add('off');
+
+                const statusIndicator = button
+                    .closest('.solenoid-item')
+                    .querySelector('.status-indicator');
+
+                statusIndicator.classList.remove('green');
+                statusIndicator.classList.add('red');
+
             }
         }
 

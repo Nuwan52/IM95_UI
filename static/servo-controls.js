@@ -1,4 +1,5 @@
 // Servo motor position management
+var socket = io();
 let servoPositions = {
     1: 0.0,
     2: 0.0,
@@ -10,12 +11,14 @@ let servoPositions = {
 };
 
 // Position increment/decrement step
-const POSITION_STEP = 0.1;
+const POSITION_STEP = 1;
 
 // Adjust servo position
 function adjustPosition(motorId, change) {
     // Update the position
-    servoPositions[motorId] += change;
+    servoPositions[motorId] += 10000 * change;
+
+    console.log(change + " motor change");
     
     // Round to one decimal place to avoid floating point precision issues
     servoPositions[motorId] = Math.round(servoPositions[motorId] * 10) / 10;
@@ -42,6 +45,23 @@ function adjustPosition(motorId, change) {
     
     // Save the updated positions
     saveServoPositions();
+}
+
+function setMotorPosfromBackend(motorId){
+    var change = 1;
+    const positionElement = document.querySelector(`[data-motor="${motorId}"]`);
+    if (positionElement) {
+        positionElement.textContent = servoPositions[motorId].toFixed(1);
+        
+        // Add a subtle animation to show the change
+        positionElement.style.transform = 'scale(1.1)';
+        positionElement.style.color = change > 0 ? '#10b981' : '#ef4444';
+        
+        setTimeout(() => {
+            positionElement.style.transform = 'scale(1)';
+            positionElement.style.color = '';
+        }, 200);
+    }
 }
 
 // Reset servo position to default (0.0)
@@ -101,6 +121,7 @@ function loadServoPositions() {
 // Initialize servo positions on page load
 document.addEventListener('DOMContentLoaded', function() {
     loadServoPositions();
+    console.log("Setting page has been loaded")
 });
 
 // ===========================================
@@ -144,16 +165,21 @@ function getAllSolenoidsStatus() {
 // Function to set servo position
 function setServoPosition(motorId, position) {
     console.log(`Backend: Setting Motor ${motorId} to position ${position}`);
+    socket.emit('SERVO_CONTROL_MANUAL' , motorId , position);
     // Add your backend API call here
     // Example: fetch('/api/servo/position', { method: 'POST', body: JSON.stringify({id: motorId, position: position}) })
 }
 
+socket.on('MOTOR_POS', function (data) {
+            servoPositions[data.motor] = data.pos;
+            setMotorPosfromBackend(data.motor);
+
+        });
+
 // Function to get servo position from backend
-function getServoPosition(motorId) {
+function getServoPosition(motorId , motorPos) {
     console.log(`Backend: Getting position for Motor ${motorId}`);
-    // Add your backend API call here
-    // Example: return fetch('/api/servo/position/' + motorId).then(response => response.json())
-    return Promise.resolve({ id: motorId, position: 0.0 }); // Mock response
+    return Promise.resolve({ id: motorId, position: motorPos }); // Mock response
 }
 
 // Function to get all servo positions
