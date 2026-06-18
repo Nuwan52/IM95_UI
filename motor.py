@@ -207,6 +207,15 @@ class MotorController:
     #          HOMING
     # ============================
 
+    def HomeSet_Init(self, direction , axis):
+        if direction == 1: 
+         DM = 4
+        else:
+            DM = 5
+        rr = self.client.write_register(address=0X600A, value=DM, device_id=axis)
+        return rr
+        
+
     def homing(self, axis , direction = 1):
         if direction == 1: 
          DM = 4
@@ -223,7 +232,7 @@ class MotorController:
         ]
         for addr, value in sequence:
             rr = self.client.write_register(address=addr, value=value, device_id=axis)
-            time.sleep(0.01)
+            time.sleep(0.1)
             print(rr)
 
     def homing_all(self, axes=[1, 3, 5 , 6, 7]):

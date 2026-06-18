@@ -4,6 +4,10 @@ import time
 import socket
 from motor import MotorController
 import pandas as pd 
+import threading
+modbus_lock = threading.Lock()
+
+
 
 app = Flask(__name__)
 socketio = SocketIO(app)
@@ -38,11 +42,45 @@ SRRVU = False
 SRRHL = False
 SRRHR = False
 
+CUP_MODE = 1
+
+
+SRRHR_event = threading.Event()
+SRRHL_event = threading.Event()
+SRRVU_event = threading.Event()
+SRRVD_event = threading.Event()
+
+SR0CO_event = threading.Event()
+SR0EX_event = threading.Event()
+
+IMSENSOR_event = threading.Event()
+
+CUP_STACK_COMPLETE_event  = threading.Event()
+
+
+
+
+ROBOT_ARM_COMPLETE_event = threading.Event()
+ROBOT_ARM_PICKING_COMPLETED_event = threading.Event()
+
+
+
+# packing axis io pin verify 
+
+packing_suction_01_event = threading.Event()
+packing_suction_02_event = threading.Event()
+packing_expander_event = threading.Event()
+
 
 PSR01OK  = False
 PSG01OK  = False
 PSR02OK  = False
 PSG02OK  = False
+PSR03OK  = False
+PSG03OK  = False
+
+PSR04OK  = False
+PSG04OK  = False
 
 
 
@@ -75,30 +113,10 @@ def startingReques(data):
     global home_done
 
     if home_done ==False:
-        mc.homing(axis=2 , direction=1) # cup sucking arm aixs 
-        time.sleep(5)
-        mc.homing(axis=1 ,direction=1) #stacking robot z axis 
-        time.sleep(5)
-        mc.homing(axis=3 , direction=1) # stacking robot x axis
-        time.sleep(5) 
-        mc.homing(axis=6 ,direction=1) #high speed arm Z
-        time.sleep(5) 
-        mc.homing(axis=7 , direction=0) #high speed arm x
-        time.sleep(5)
-        print("home done")
+        Homing_loop()
         home_done = True
-
-   
     
     
-    # mc.send_immediate_trigger(pos=135000 , velocity=100 , slave_id=2)
-
-    # if data == 1:
-    #     mc.send_immediate_trigger(pos=-150000 , velocity=100 , slave_id=3)
-    #     mc.send_immediate_trigger(pos=30000 , velocity=100 , slave_id=2)
-    # else:
-    #     mc.send_immediate_trigger(pos=-1000 , velocity=100 , slave_id=3)
-    #     mc.send_immediate_trigger(pos=1000 , velocity=100 , slave_id=2)
     print("START THE MACHINE  " , data)  
 
 
@@ -155,8 +173,55 @@ def handle_button_click(button):
     if 'toggle-btn 08 off' in data:
         sending_Ethernet_command('CIF0081')
 
+    if 'toggle-btn 09 on' in data:
+        sending_Ethernet_command('CIE0010')
+
+    if 'toggle-btn 09 off' in data:
+        sending_Ethernet_command('CIE0011')
+
+    if 'toggle-btn 10 on' in data:
+        sending_Ethernet_command('CIE0020')
+
+    if 'toggle-btn 10 off' in data:
+        sending_Ethernet_command('CIE0021')
+
+    if 'toggle-btn 11 on' in data:
+        sending_Ethernet_command('CIE0030')
+
+    if 'toggle-btn 11 off' in data:
+        sending_Ethernet_command('CIE0031')
 
 
+    if 'toggle-btn 12 on' in data:
+        sending_Ethernet_command('CIE0040')
+
+    if 'toggle-btn 12 off' in data:
+        sending_Ethernet_command('CIE0041')
+
+
+    if 'toggle-btn 13 on' in data:
+        sending_Ethernet_command('CIA0070')
+
+    if 'toggle-btn 13 off' in data:
+        sending_Ethernet_command('CIA0071')
+
+    if 'toggle-btn 14 on' in data:
+        sending_Ethernet_command('CIA0040')
+
+    if 'toggle-btn 14 off' in data:
+        sending_Ethernet_command('CIA0041')
+
+    if 'toggle-btn 15 on' in data:
+        sending_Ethernet_command('CIA0050')
+
+    if 'toggle-btn 15 off' in data:
+        sending_Ethernet_command('CIA0051')
+
+    if 'toggle-btn 16 on' in data:
+        sending_Ethernet_command('CIA0070')
+
+    if 'toggle-btn 16 off' in data:
+        sending_Ethernet_command('CIA0071')
 
     # if 'toggle-btn 04 on' in data:
     #     sending_Ethernet_command('CIB0011')
@@ -215,7 +280,53 @@ def servo_data_request(motor , data):
     # time.sleep(0.5)
     # readingFlag = True
   
+
+def Homing_loop():
+    mc.homing(axis=2 , direction=1)
+    time.sleep(0.1)
+    while movement_complete(axis=2) == 0:
+        print("Waiting for Complete Home .. Axis 2")
+        time.sleep(0.1)
+    print("Home Done :  Axis 2")
+
+    mc.homing(axis=1 ,direction=1) 
+    time.sleep(0.1)
+    while movement_complete(axis=1) == 0:
+        print("Waiting for Complete Home .. Axis 1")
+        time.sleep(0.1)
+    print("Home Done :  Axis 1")
     
+
+    mc.homing(axis=3 , direction=1)
+    time.sleep(0.1)
+    while movement_complete(axis=3) == 0:
+        print("Waiting for Complete Home .. Aixs 3")
+        time.sleep(0.1)
+    print("Home Done :  Axis 3")
+
+    mc.homing(axis=6 ,direction=1)
+    time.sleep(0.1)
+    while movement_complete(axis=6) == 0:
+        print("Waiting for Complete Home .. Aixs 6")
+        time.sleep(0.1)
+    print("Home Done :  Axis 6")
+
+    mc.homing(axis=7 , direction=0)
+    time.sleep(0.1)
+    while movement_complete(axis=7) == 0:
+        print("Waiting for Complete Home .. Aixs 7")
+        time.sleep(0.1)
+    print("Home Done :  Axis 7")
+
+
+def HomeDirectionSet():
+    sending_Ethernet_command("CIF0010")
+    time.sleep(0.2)
+    sending_Ethernet_command("CIF0030")
+    time.sleep(0.2)
+    
+
+
 
 
 @socketio.on('INIT')
@@ -266,52 +377,42 @@ def Init_Convayer():
 def InitMotors():
     global alarmErrors
 
-    mc.MotorToqueSetting(axis=1  ,toque=200)
+    # TOQUE LIMIT SETUP ..
+
+    mc.MotorToqueSetting(axis=1  ,toque=400)
+    time.sleep(0.5)
     mc.MotorToqueSetting(axis=2  ,toque=400)
+    time.sleep(0.5)
     mc.MotorToqueSetting(axis=3  ,toque=400)
+    time.sleep(0.5)
     mc.MotorToqueSetting(axis=6  ,toque=200)
+    time.sleep(0.5)
     mc.MotorToqueSetting(axis=7  ,toque=400)
-    
-    
-    
+    time.sleep(0.5)
+
+    # SOFTWARE LIMIT SETUP 
+
 
     mc.MinSoftwareLimit(axis=6 , min= 100)
-
-    # time.sleep(1)
-
-    mc.MaxSoftwareLimit(axis=6 , Max=35000)
-
-
+    time.sleep(0.5)
+    mc.MaxSoftwareLimit(axis=6 , Max=32000)
+    time.sleep(0.5)
     mc.MinSoftwareLimit(axis=2 , min= 100)
-
-    # time.sleep(1)
-
+    time.sleep(0.5)
     mc.MaxSoftwareLimit(axis=2 , Max=130000)
-
-
-
+    time.sleep(0.5)
     mc.MinSoftwareLimit(axis=7 , min= -210000)
-
-    # time.sleep(1)
-
+    time.sleep(0.5)
     mc.MaxSoftwareLimit(axis=7 , Max=-100)
-
-
-
+    time.sleep(0.5)
     mc.MinSoftwareLimit(axis=3 , min= 100)
-
-    # time.sleep(1)
-
-    mc.MaxSoftwareLimit(axis=3 , Max=300000)
-
-
+    time.sleep(0.5)
+    mc.MaxSoftwareLimit(axis=3 , Max=441000)
+    time.sleep(0.5)
     mc.MinSoftwareLimit(axis=1 , min= 10)
-
-    # time.sleep(1)
-
-    mc.MaxSoftwareLimit(axis=1 , Max=1000)
-
-
+    time.sleep(0.5)
+    mc.MaxSoftwareLimit(axis=1 , Max=87000)
+    time.sleep(0.5)
     # mc.clear_alarm(axis=1)
     # time.sleep(1)
     # status =mc.enable_motor(axis=1)
@@ -329,6 +430,8 @@ def InitMotors():
     time.sleep(1)
     ReadMotorAlams()
     time.sleep(1)
+    HomeDirectionSet()
+    # time.sleep(1)
 
     if alarmErrors == False:
         for n in range(1 , 8):
@@ -344,9 +447,6 @@ def InitMotors():
                 
     else:
         socketio.emit('INIT_BACKEND', {"message": "stopped"})
-
-    
-
 
     
 
@@ -382,7 +482,21 @@ def ethernet_thread():
     while True:
         data, addr = sock.recvfrom(1024)
         Controller_data_loader(data.decode())
-        
+
+
+def safe_move(axis, velocity, pos):
+    with modbus_lock:
+        Movement_exicuter(axis=axis, velocity=velocity, pos=pos)
+
+def safe_move_relative(axis, velocity, pos):
+    with modbus_lock:
+        Movement_exicuter_relative(axis=axis, velocity=velocity, pos=pos)
+
+
+def safe_movement_complete(axis):
+    with modbus_lock:
+        return movement_complete(axis=axis)
+
 
 
 def ethernet_thread_AI():
@@ -390,6 +504,7 @@ def ethernet_thread_AI():
     while True:
         data, addr = sock_02.recvfrom(1024)
         print("AI Received:", data.decode())
+        sending_Ethernet_command(data.decode())
         
         time.sleep(0.1)
 
@@ -442,9 +557,20 @@ def movement_complete(axis):
                 return 0
         except:
             print("Modbus Reading Error")
-        
-            
 
+
+def PackingAxis_event_clear():
+    SR0EX_event.clear()
+    SR0CO_event.clear()
+    packing_suction_01_event.clear();
+    packing_suction_02_event.clear()
+        
+
+def Event_clear():
+    SRRHL_event.clear()
+    SRRHR_event.clear()
+    SRRVD_event.clear()
+    SRRVU_event.clear()
 
 def veryfy_pos(target , axis):
     data = mc.read_motor_pos(axis=axis)
@@ -457,6 +583,8 @@ def veryfy_pos(target , axis):
 
 def ReadMotors():
     while True:
+       
+
         if readingFlag:
             global machineRuning
             global motorVelocity_z
@@ -465,200 +593,257 @@ def ReadMotors():
             global home_done
             global retry_count
             global SRRVU, SRRVD , SRRHL , SRRHR
-            global PSR01OK , PSG01OK , PSG02OK , PSR02OK
+            global PSR01OK , PSG01OK , PSG02OK , PSR02OK , PSR03OK , PSG03OK
 
             if machine_setting_mode == 1:
                 ReadMotorPos()
                 time.sleep(0.5)
+            
+
+
 
             if machineRuning == 1 and home_done ==True:
                 print("Loop exicuting")
-                Movement_exicuter_relative(axis=4 , velocity= 500 , pos=-1000000)
-                time.sleep(0.01)
-                Movement_exicuter_relative(axis=5 , velocity= 500 , pos=-1000000)
-                
-                Movement_exicuter(axis=2 , velocity= 3000 , pos=130000)
-
-                Movement_exicuter(axis=3 , velocity= 5000 , pos=300000)
-                SRRVD = False
-                SRRVU = False
-                SRRHL = False
-                SRRHR = False
-                
-                
-                sending_Ethernet_command('CIF0031')
-                while not SRRVD:
-                    time.sleep(0.01)
-                sending_Ethernet_command('CIF0011')
-                 
-               
-                while movement_complete(axis=2) == 0 and not SRRHR:
-                    time.sleep(0.01)
-
-                SRRVD = False
-                SRRVU = False
-                SRRHL = False
-                SRRHR = False
-                sending_Ethernet_command('CIF0010') 
-                while not SRRHL:
-                    time.sleep(0.01)
-
-                sending_Ethernet_command('CIF0030')  
-                while not SRRVU:
-                    time.sleep(0.01)
-                
-                
-                Movement_exicuter(axis=7 , velocity= 4000 , pos=-210000)
-                Movement_exicuter(axis=2 , velocity= 4000 , pos=100)
-                
-                while movement_complete(axis=2) == 0:
-                    time.sleep(0.01)
-                 
-
-                Movement_exicuter(axis=6 , velocity= 1000 , pos=15000)
-                while movement_complete(axis=6) == 0:
-                    time.sleep(0.01)
-                    
-
-                Movement_exicuter(axis=6 , velocity= 1000 , pos=100)
-                while movement_complete(axis=6) == 0:
-                    time.sleep(0.01)
-                    
-
-                Movement_exicuter(axis=2 , velocity= 4000 , pos=130000)
-                Movement_exicuter(axis=7 , velocity= 4000 , pos=-100)
-                SRRVD = False
-                SRRVU = False
-                SRRHL = False
-                SRRHR = False
-
-                
+                safe_move(axis=2 , velocity= 3000 , pos=130000)
                 sending_Ethernet_command('CIF0031') 
-
-                while not SRRVD:
+       
+                SRRVD = False
+                SRRVU = False
+                SRRHL = False
+                SRRHR = False
+                PSG01OK = False
+                PSG02OK = False
+                Event_clear()
+                
+                # SENDING SUCKTION ON COMMANDS
+                time.sleep(0.01)
+                sending_Ethernet_command('CIF0041')
+                time.sleep(0.01)
+                sending_Ethernet_command('CIF0061')
+                 
+                
+                while safe_movement_complete(axis=2) == 0:
                     time.sleep(0.01)
 
-                sending_Ethernet_command('CIF0011')
+                while not IMSENSOR_event.is_set():
+                    sending_Ethernet_command("IMSENSOR")
+                    time.sleep(0.2)
+                CUP_STACK_COMPLETE_event.set()
 
+                # checkig for 4 cup mode
 
-                
-                
-                
-                while movement_complete(axis=7) == 0 and not SRRHR:
+                # checking for all cup mode. 
+
+                while not PSG01OK or not PSG02OK:
                     time.sleep(0.01)
-                    
 
-                Movement_exicuter(axis=6 , velocity= 1000 , pos=15000)
-                while movement_complete(axis=6) == 0:
+                
+                
+
+                IMSENSOR_event.clear()
+                SRRVD = False
+                SRRVU = False
+                SRRHL = False
+                SRRHR = False
+
+
+                while not SRRHR_event.is_set():
+                    sending_Ethernet_command('CIF0011')
+                    time.sleep(0.2)
+
+                while not SRRHL_event.is_set():
+                    sending_Ethernet_command('CIF0010')
+                    time.sleep(0.2)
+
+                while not SRRVU_event.is_set():
+                    sending_Ethernet_command('CIF0030')
+                    time.sleep(0.2)
+                
+
+                # sending_Ethernet_command('CIF0011')
+                # print("waiting for CIF0011")
+                # SRRHR_event.wait()
+
+
+                # sending_Ethernet_command('CIF0010')
+                # print("waiting for CIF0010")
+                # SRRHL_event.wait() 
+               
+                # sending_Ethernet_command('CIF0030')  
+                # print("waiting for CIF0030")
+                # SRRVU_event.wait()
+
+                safe_move(axis=2 , velocity= 4000 , pos=100)
+                
+                while safe_movement_complete(axis=2) == 0:
                     time.sleep(0.01)
-                    
-
-                Movement_exicuter(axis=6 , velocity= 1000 , pos=100)
-                Movement_exicuter(axis=3 , velocity= 5000 , pos=100)
-                
-                while movement_complete(axis=3) == 0:
-                    time.sleep(0.01)
-                while movement_complete(axis=6) == 0:
-                    time.sleep(0.01)
-                    
-                    
-                    
-                
-                
-                
-                
 
                 
 
+                ROBOT_ARM_COMPLETE_event.set()
+                time.sleep(0.3)
 
-                    
-                   
-                # status = mc.send_immediate_trigger(pos=-100 , velocity=1000, slave_id=7)
-                # if status == 0:
-                #     print("Modbus Failure")
-                #     machineRuning = 0
-                #     break 
-                # mc.send_immediate_trigger(pos=-150000 , velocity=motorVelocity_x , slave_id=3)
-                # mc.send_immediate_trigger(pos=30000 , velocity=motorVelocity_z , slave_id=2)
-                # time.sleep(0.5)
-                # mc.send_immediate_trigger(pos=1000 , velocity=motorVelocity_z , slave_id=2)
-                # time.sleep(0.5)
-                # mc.send_immediate_trigger(pos=-1000 , velocity=motorVelocity_x , slave_id=3)
+                sending_Ethernet_command('CIF0040')
+                time.sleep(0.01)
+                sending_Ethernet_command('CIF0060')
+                time.sleep(0.01)
+
+                ROBOT_ARM_PICKING_COMPLETED_event.wait()
+                ROBOT_ARM_PICKING_COMPLETED_event.clear()
+
                 
                  
-                # status = mc.send_immediate_trigger(pos=100000 , velocity=3000, slave_id=2)
-                
-                # if status == 0:
-                #     print("Modbus Failure")
-                #     machineRuning = 0
-                #     break 
+                SRRVD = False
+                SRRVU = False
+                SRRHL = False
+                SRRHR = False
+                Event_clear()
 
-                # mc.send_immediate_trigger(pos=30000 , velocity=motorVelocity_z , slave_id=2)
-                # time.sleep(0.5)
-                # mc.send_immediate_trigger(pos=1000 , velocity=motorVelocity_z , slave_id=2)
-                # time.sleep(0.5)
+               
 
+                print("start loop over.............................")
+                    
+                    
+        time.sleep(0.1)
+
+
+def PackingAxis():
+    while True:
+        global machineRuning , home_done
+        if machineRuning == 1 and home_done ==True:
+            #  clear the packing axis veraibles
+             PackingAxis_event_clear()
+
+             safe_move(axis=3 , velocity= 5000 , pos=440827)
+
+            #  send untill the controller respondes 
+
+             while not SR0CO_event.is_set():
+                sending_Ethernet_command('CIA0041')
+                time.sleep(0.1)
+           
+             
+             while safe_movement_complete(axis=3) == 0:
+                    time.sleep(0.01)
+            #  wainting for event to trigger 
+             CUP_STACK_COMPLETE_event.wait()
+             
+             while not packing_suction_01_event.is_set():
+                sending_Ethernet_command('CIA0071')
+                time.sleep(0.1)
+
+             while not packing_suction_02_event.is_set():
+                sending_Ethernet_command('CIA0051')
+                time.sleep(0.1)
+
+             
+
+             safe_move(axis=1 , velocity= 5000 , pos=86740)
+
+             while safe_movement_complete(axis=1) == 0:
+                    time.sleep(0.01)
+
+             CUP_STACK_COMPLETE_event.clear()
+             
+             safe_move(axis=1 , velocity= 5000 , pos=100)
+
+             while safe_movement_complete(axis=1) == 0:
+                    time.sleep(0.01)
+
+
+             while not SR0EX_event.is_set():
+                sending_Ethernet_command('CIA0040')
+                time.sleep(0.1)
+
+             safe_move(axis=3 , velocity= 5000 , pos=100)
+
+             while safe_movement_complete(axis=3) == 0:
+                    time.sleep(0.01)
+             safe_move(axis=1 , velocity= 5000 , pos=86740)
+             while safe_movement_complete(axis=1) == 0:
+                    time.sleep(0.01)
+
+             sending_Ethernet_command('CIA0070')
+             time.sleep(0.1)
+             sending_Ethernet_command('CIA0050')
+             time.sleep(0.1)
+
+             safe_move(axis=1 , velocity= 5000 , pos=100)
+
+             while safe_movement_complete(axis=1) == 0:
+                    time.sleep(0.01)
+             
 
             
-            # sending_Ethernet_command('CIB0011')
-            # time.sleep(0.01)
-            # sending_Ethernet_command('CIB0010')
-            # time.sleep(0.01)
 
 
 
-            # sending_Ethernet_command('CIB0021')
-            # time.sleep(0.01)
-            # sending_Ethernet_command('CIB0020')
-            # time.sleep(0.01)
 
+             
 
-            # sending_Ethernet_command('CIB0031')
-            # time.sleep(0.01)
-            # sending_Ethernet_command('CIB0030')
-            # time.sleep(0.01)
-
-
-            # sending_Ethernet_command('CIB0041')
-            # time.sleep(0.01)
-            # sending_Ethernet_command('CIB0040')
-            # time.sleep(0.01)
-
-
-            # sending_Ethernet_command('CIB0051')
-            # time.sleep(0.01)
-            # sending_Ethernet_command('CIB0050')
-            # time.sleep(0.01)
-
-
-            # sending_Ethernet_command('CIB0061')
-            # time.sleep(0.05)
-            # sending_Ethernet_command('CIB0060')
-            # time.sleep(0.05)
-
-            # sending_Ethernet_command('CIB0071')
-            # time.sleep(0.05)
-            # sending_Ethernet_command('CIB0070')
-            # time.sleep(0.05)
-
-            # ReadMotorPos()
-            # ReadMotorAlams()
-
-            # sending_Ethernet_command('CIB0081')
-            # time.sleep(0.05)
-            # sending_Ethernet_command('CIB0080')
-            # time.sleep(0.05)
-            # ReadMotorPos()
-            # ReadMotorVoltage()
-            #  Motorstatus()
-            # ReadMotorAlams()
-            # Ethenrnet preformance testing ----------------------------------------------------
-            # global sendtime
-            # sendtime = time.time_ns()
-            # print("sending time : " , sendtime)
-            # sending_Ethernet_command("CIA655")
-            # -----------------------------------------------------------------------------------
         time.sleep(0.1)
+
+def PickPlace():
+    while True:
+        global machineRuning , home_done ,PSG04OK , PSG03OK
+        if machineRuning == 1 and home_done ==True:
+            safe_move(axis=7 , velocity= 4000 , pos=-210000)
+            while safe_movement_complete(axis=7) == 0:
+                time.sleep(0.01)
+
+            PSG03OK = False
+            PSG04OK = False
+            time.sleep(0.01)
+            sending_Ethernet_command('CIE0021')
+            time.sleep(0.01)
+            sending_Ethernet_command('CIE0031')
+            
+            ROBOT_ARM_COMPLETE_event.wait()
+            ROBOT_ARM_COMPLETE_event.clear()
+
+
+            safe_move(axis=6 , velocity= 1000 , pos=30000)
+            while safe_movement_complete(axis=6) == 0:
+                time.sleep(0.01)
+
+            safe_move(axis=6 , velocity= 1000 , pos=100)
+            while safe_movement_complete(axis=6) == 0:
+                time.sleep(0.01)
+
+            while not PSG03OK or not PSG04OK:
+                    time.sleep(0.01)
+
+            ROBOT_ARM_PICKING_COMPLETED_event.set()
+
+            safe_move(axis=7 , velocity= 1500 , pos=-100)
+            while safe_movement_complete(axis=7) == 0:
+                time.sleep(0.01)
+
+            safe_move(axis=6 , velocity= 1000 , pos=31534)
+            while safe_movement_complete(axis=6) == 0:
+                time.sleep(0.01)
+
+            time.sleep(0.01)
+            sending_Ethernet_command('CIE0020')
+            time.sleep(0.01)
+            sending_Ethernet_command('CIE0030')
+
+            time.sleep(0.5)
+
+            safe_move(axis=6 , velocity= 1000 , pos=100)
+            while safe_movement_complete(axis=6) == 0:
+                time.sleep(0.01)
+
+            safe_move_relative(axis=4 , velocity= 1000 , pos=-800000)
+            time.sleep(0.01)
+            safe_move_relative(axis=5 , velocity= 1000 , pos=-800000)
+            time.sleep(0.01)
+
+    
+    
+
+        time.sleep(0.1)
+
 
 
 def modbus_position_to_decimal(high_word, low_word):
@@ -674,7 +859,7 @@ def ReadMotorPos():
             time.sleep(0.01)
             pos = modbus_position_to_decimal(data.registers[0] ,data.registers[1])
             socketio.emit('MOTOR_POS', {"motor": n ,"pos": pos })
-            print(pos)
+            # print(pos)
         except:
             print("Something Wrong with Axis " ,n)
             break
@@ -686,7 +871,7 @@ def ReadMotorVoltage():
 
 def Controller_data_loader(data):
     global SRRVD , SRRVU , SRRHR , SRRHL
-    global PSR01OK , PSG01OK , PSG02OK , PSR02OK
+    global PSR01OK , PSG01OK , PSG02OK , PSR02OK , PSG03OK , PSR03OK ,PSG04OK , PSR04OK
     # Ethernet preformance teting data letancy check ----------------------------------
     # global sendtime
     # print("data comming : " , time.time_ns())
@@ -700,23 +885,40 @@ def Controller_data_loader(data):
         code = data[2:]
         IO_Input_Encorder(code)
 
+    if(data == 'IMSOK'):
+        IMSENSOR_event.set()
 
     if(data == 'SRRHR'):
         sending_Ethernet_command('SRRHR')
         SRRHR = True
+        SRRHR_event.set()
 
     if(data == 'SRRHL'):
         sending_Ethernet_command('SRRHL') 
         SRRHL = True
+        SRRHL_event.set()
 
     if(data == 'SRRVD'):
         sending_Ethernet_command('SRRVD') 
         SRRVD = True
+        SRRVD_event.set()
+
         
     
     if(data == 'SRRVU'):
         sending_Ethernet_command('SRRVU') 
         SRRVU = True
+        SRRVU_event.set()
+
+    if(data == 'SR0CO'):
+        sending_Ethernet_command('SR0CO') 
+        SR0CO_event.set()
+
+    if(data == 'SR0EX'):
+        sending_Ethernet_command('SR0EX') 
+        SR0EX_event.set()
+
+
 
     if(data == 'PSG01OK'):
         sending_Ethernet_command('PSG01OK') 
@@ -733,6 +935,30 @@ def Controller_data_loader(data):
     if(data == 'PSR02OK'):
         sending_Ethernet_command('PSR02OK') 
         PSR02OK = True
+
+    if(data == 'PSG03OK'):
+        sending_Ethernet_command('PSG03OK') 
+        PSG03OK = True
+
+    if(data == 'PSR03OK'):
+        sending_Ethernet_command('PSR03OK') 
+        PSR03OK = True
+
+    if(data == 'PSG04OK'):
+        sending_Ethernet_command('PSG04OK') 
+        PSG04OK = True
+
+    if(data == 'PSR04OK'):
+        sending_Ethernet_command('PSR04OK') 
+        PSR04OK = True
+
+    if(data == 'PAS01'):
+        packing_suction_01_event.set()
+        
+
+    if(data == 'PAS02'):
+        packing_suction_02_event.set()
+        
         
         
   
@@ -743,7 +969,7 @@ def IO_output_Encorder():
 def IO_Input_Encorder(code):
     data_io = bin(int(code))
     socketio.emit('IO_DATA', {"message": data_io})
-    print(data_io)
+    # print(data_io)
     
 
 if __name__ == "__main__":
@@ -757,6 +983,8 @@ if __name__ == "__main__":
     socketio.start_background_task(ethernet_thread)
     socketio.start_background_task(ethernet_thread_AI)
     socketio.start_background_task(ReadMotors)
+    socketio.start_background_task(PackingAxis)
+    socketio.start_background_task(PickPlace)
 
    
 
